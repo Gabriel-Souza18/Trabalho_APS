@@ -1,6 +1,5 @@
-from produto import Produto
-from gerente import Gerente
-
+from pessoas import *
+from .produto import Produto
 
 class Estoque:
     def __init__(self, gerente):

@@ -1,7 +1,5 @@
-from produto import Produto
-from cliente import Cliente
-from estoque import Estoque
-
+from pessoas import *
+from venda import *
 class Venda:
     def __init__(self, cliente, estoque):
         self.produtos={}
