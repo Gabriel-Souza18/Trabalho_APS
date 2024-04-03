@@ -1,0 +1,11 @@
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+
+src/__pycache__/cliente.cpython-37.pyc
+src/__pycache__/estoque.cpython-37.pyc
+src/__pycache__/produto.cpython-37.pyc
+src/__pycache__/venda.cpython-37.pyc
+.idea/Trabalho_APS.iml
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/inspectionProfiles/Project_Default.xml
