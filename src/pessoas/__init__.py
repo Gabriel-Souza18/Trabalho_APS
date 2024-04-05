@@ -1,4 +1,4 @@
 
-from .gerente import Gerente
-from .vendedor import Vendedor
-from .cliente import Cliente
+from .diretor import Diretor
+from .professor import Professor
+from .aluno import Aluno
