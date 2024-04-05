@@ -1,5 +1,0 @@
-banana,10.5,12
-maca,5,18
-goiaba,4.2,15
-pera,3.4,20
-manga,40,1
