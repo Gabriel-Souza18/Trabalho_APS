@@ -1,22 +1,27 @@
-from pessoas import *
 from .materia import Materia
 
+import sys
+sys.path.append('src')
+from pessoas import*
+
+
 class Turma():
-    def __init__(self, sala):
-        self.alunos = []
+    def __init__(self,nome_turma, sala):
+        self.nome_turma = nome_turma
+        self.alunos = {}
         self.materias = []
         self.sala = sala
 
     def adicionar_aluno(self, aluno):
-        self.alunos.append(aluno)
+        self.alunos[aluno.nome] = aluno
 
     def adicionar_materia(self, materia):
         self.materias.append(materia)
 
     def imprimir_turma(self):
         for materia in self.materias:
-            print(f'Professor: {materia.professor.nome} de `{materia.nome}')
-        for aluno in self.alunos:
+            print(f'Professor: {materia.professor.nome} de {materia.nome}')
+        
+        for _, aluno in self.alunos.items():
             print(f'Aluno {aluno.nome} matricula: {aluno.matricula}')
-
         

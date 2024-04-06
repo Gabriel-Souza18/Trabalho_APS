@@ -1,11 +1,15 @@
 import unittest
+import sys
+sys.path.append('src')
+
+from pessoas import*
 from escola import *
-from pessoas import *
+
 
 class TestTurma(unittest.TestCase):
     def setUp(self):
         self.turma = Turma("Sala 101")
-        self.aluno = Aluno("João", 12,"123")
+        self.aluno = Aluno("João", 12,"123",10,'b3')
         self.professor = Professor("Maria",40,"321321",1000)
         self.materia = Materia("Matemática", self.professor)
 

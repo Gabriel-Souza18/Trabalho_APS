@@ -1,4 +1,6 @@
 from .pessoa import Pessoa
+import sys
+sys.path.append('src')
 from escola import *
 
 class Professor(Pessoa):

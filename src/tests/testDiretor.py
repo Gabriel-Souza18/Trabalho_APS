@@ -1,6 +1,10 @@
 import unittest
-from pessoas import Aluno, Professor, Diretor
-from escola import Turma
+
+import sys
+sys.path.append('src')
+
+from pessoas import *
+from escola import *
 
 
 class TestDiretor(unittest.TestCase):
