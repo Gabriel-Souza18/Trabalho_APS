@@ -7,5 +7,6 @@ class Aluno(Pessoa):
         self.nota = nota
         self.turma = turma
 
-
+    def imprimir_aluno(self):
+        print(f'Nome:{self.nome},Idade:{self.idade},Matricula: {self.matricula},Nota{self.nota}, Turma:{self.turma}')
     
