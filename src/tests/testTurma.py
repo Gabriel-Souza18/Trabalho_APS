@@ -8,8 +8,8 @@ from escola import *
 
 class TestTurma(unittest.TestCase):
     def setUp(self):
-        self.turma = Turma("Sala 101")
-        self.aluno = Aluno("João", 12,"123",10,'b3')
+        self.turma = Turma("B3","Sala 101")
+        self.aluno = Aluno("João", 12,"123",'b3')
         self.professor = Professor("Maria",40,"321321",1000)
         self.materia = Materia("Matemática", self.professor)
 

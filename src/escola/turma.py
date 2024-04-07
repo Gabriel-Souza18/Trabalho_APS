@@ -6,11 +6,11 @@ from pessoas import*
 
 
 class Turma():
-    def __init__(self,nome_turma, sala):
+    def __init__(self,nome_turma):
         self.nome_turma = nome_turma
         self.alunos = {}
         self.materias = []
-        self.sala = sala
+        self.sala = None
 
     def adicionar_aluno(self, aluno):
         self.alunos[aluno.nome] = aluno
@@ -23,5 +23,5 @@ class Turma():
             print(f'Professor: {materia.professor.nome} de {materia.nome}')
         
         for _, aluno in self.alunos.items():
-            print(f'Aluno {aluno.nome} matricula: {aluno.matricula}')
+            print(f'Aluno {aluno.nome}, Matricula: {aluno.matricula}, Notas:{dict(aluno.notas)} ')
         

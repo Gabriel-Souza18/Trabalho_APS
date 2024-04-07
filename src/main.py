@@ -3,7 +3,7 @@ from escola import*
 
 
 diretor =Diretor("Diretor",50,'3216516')
-Turma1 = diretor.ler_turma("Turma1",1.1)
+Turma1 = diretor.ler_turma("Turma1")
 diretor.adicionar_turma(Turma1)
 
 ze = Professor("ze", 40,'2165116', 10100)

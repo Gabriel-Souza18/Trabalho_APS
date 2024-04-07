@@ -17,20 +17,23 @@ class Diretor(Pessoa):
     def adicionar_turma(self, turma):
         self.turmas[turma.nome_turma] = turma
 
-    def ler_turma(self, nome_turma, sala):
-        nova_turma = Turma(nome_turma, sala)
+    def ler_turma(self, nome_turma):
+        turma = Turma(nome_turma)
         with open(f"{nome_turma}.txt", "r") as arq:
             for linha in arq:
-                nome, idade, matricula, nota, turma = linha.strip().split(', ')
-                aluno = Aluno(nome, idade, matricula, nota, turma)
-                nova_turma.adicionar_aluno(aluno)
-        return nova_turma
+                nome, idade, matricula, notas, sala = linha.strip().split('/ ')
+                # Convertendo a string de notas de volta para um dicionário
+                notas = eval(notas)
+                aluno = Aluno(nome, int(idade), matricula, notas, sala)
+                turma.adicionar_aluno(aluno)
+        return turma
+
 
     def escrever_turma(self, nome_turma):
         with open(f"{nome_turma}.txt", 'w') as arq:
             for turma in self.turmas:
                 if turma.sala == nome_turma:
                     for aluno in turma.alunos:
-                        arq.write(f"{aluno.nome}, {aluno.idade}, {aluno.matricula}, {aluno.nota}, {turma.sala}\n")
+                        arq.write(f"{aluno.nome}/ {aluno.idade}/ {aluno.matricula}/ {dict(aluno.nota)}/ {turma.sala}\n")
 
     

@@ -1,10 +1,3 @@
-Joao, 20, 12345, 8.5, Turma1
-Maria, 19, 67890, 9.0, Turma1
-Pedro, 21, 23456, 7.5, Turma1
-Ana, 22, 78901, 8.0, Turma1
-Lucas, 20, 34567, 9.5, Turma1
-Julia, 19, 89012, 8.5, Turma1
-Gabriel, 21, 45678, 7.0, Turma1
-Carla, 22, 90123, 9.0, Turma1
-Rafael, 20, 56789, 8.0, Turma1
-Fernanda, 19, 01234, 9.5, Turma1
+Joao/ 20/ 123456/ {'Matematica': 8,'Portugues': 9}/ Turma1
+Maria/ 22/ 789012/ {'Matematica': 7,'Portugues': 10}/ Turma1
+Pedro/ 21/ 345678/ {'Matematica': 9,'Portugues': 8}/ Turma1
