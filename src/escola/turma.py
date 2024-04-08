@@ -18,6 +18,12 @@ class Turma():
     def adicionar_materia(self, materia):
         self.materias.append(materia)
 
+    def retornar_materia(self, nome_materia):
+        for materia in self.materias:
+            if materia.nome == nome_materia:
+                return materia
+        return None
+
     def imprimir_turma(self):
         for materia in self.materias:
             print(f'Professor: {materia.professor.nome} de {materia.nome}')
