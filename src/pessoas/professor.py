@@ -4,8 +4,8 @@ sys.path.append('src')
 from escola import *
 
 class Professor(Pessoa):
-    def __init__(self, nome, idade, registro, salario):
-        super().__init__(nome, idade)
+    def __init__(self, nome, idade, registro, salario,email):
+        super().__init__(nome, idade,email)
         self.registro = registro
         self.salario = salario
         self.materias = []

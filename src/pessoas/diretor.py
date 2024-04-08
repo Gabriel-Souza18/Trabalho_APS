@@ -8,8 +8,8 @@ sys.path.append('src')
 from escola import Turma,Materia
 
 class Diretor(Pessoa):
-    def __init__(self, nome, idade, registro):
-        super().__init__(nome, idade)
+    def __init__(self, nome, idade, registro,email ):
+        super().__init__(nome, idade,email)
         self.registro = registro
         self.professores = {}
         self.turmas = {}
@@ -21,10 +21,10 @@ class Diretor(Pessoa):
         turma = Turma(nome_turma)
         with open(f"{nome_turma}.txt", "r") as arq:
             for linha in arq:
-                nome, idade, matricula, notas, sala = linha.strip().split('/ ')
+                nome, idade, matricula, notas, sala, email= linha.strip().split('/ ')
                 # Convertendo a string de notas de volta para um dicionário
                 notas = eval(notas)
-                aluno = Aluno(nome, int(idade), matricula, notas, sala)
+                aluno = Aluno(nome, int(idade), matricula, notas, sala,email)
                 turma.adicionar_aluno(aluno)
         return turma
 
@@ -34,6 +34,6 @@ class Diretor(Pessoa):
             for turma in self.turmas:
                 if turma.sala == nome_turma:
                     for aluno in turma.alunos:
-                        arq.write(f"{aluno.nome}/ {aluno.idade}/ {aluno.matricula}/ {dict(aluno.nota)}/ {turma.sala}\n")
+                        arq.write(f"{aluno.nome}/ {aluno.idade}/ {aluno.matricula}/ {dict(aluno.nota)}/ {turma.sala}/ {aluno.email}\n")
 
     
