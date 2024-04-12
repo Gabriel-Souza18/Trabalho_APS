@@ -10,8 +10,7 @@ class Turma():
         self.nome_turma = nome_turma
         self.alunos = {}
         self.materias = []
-        self.sala = None
-
+    
     def adicionar_aluno(self, aluno):
         self.alunos[aluno.nome] = aluno
 

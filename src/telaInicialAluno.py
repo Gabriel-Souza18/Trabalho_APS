@@ -7,7 +7,7 @@ def TelaInicial(aluno, turma):
     sg.theme('DarkBlue12')
     
     layout=[
-        [sg.Text('Nome: '+aluno.nome, font=("Arial 14")), sg.Text('', size=(15,1)), sg.Text(f'Matricula: '+aluno.matricula, font=("Arial 14"))],        
+        [sg.Text('Nome: '+aluno.nome, font=("Arial 14")), sg.Text('', size=(10,1)), sg.Text(f'Matricula: '+aluno.matricula, font=("Arial 14"))],        
         [sg.Text(aluno.email, font=("Arial 14"))],
         [sg.Button("Ver Notas", key = "NOTAS", size=(25,20)),sg.Button("Ver Turma", key = "TURMA",size=(25,10))]
     ]
@@ -150,6 +150,6 @@ portugues.adicionar_trabalho("Redação", 100)
 Turma1.adicionar_materia(matematica)
 Turma1.adicionar_materia(portugues)
 
-aluno = Turma1.alunos["Joao"]
+aluno = Turma1.alunos["Leonardo"]
 
 TelaInicial(aluno, Turma1)
