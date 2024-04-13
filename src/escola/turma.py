@@ -9,13 +9,16 @@ class Turma():
     def __init__(self,nome_turma):
         self.nome_turma = nome_turma
         self.alunos = {}
-        self.materias = []
+        self.materias = {}
     
     def adicionar_aluno(self, aluno):
         self.alunos[aluno.nome] = aluno
 
     def adicionar_materia(self, materia):
-        self.materias.append(materia)
+        self.materias[materia.nome]=(materia)
+        self.materias[materia.nome].adicionar_turma(self)
+        materia.professor = self 
+        
 
     def retornar_materia(self, nome_materia):
         for materia in self.materias:
@@ -28,5 +31,5 @@ class Turma():
             print(f'Professor: {materia.professor.nome} de {materia.nome}')
         
         for _, aluno in self.alunos.items():
-            print(f'Aluno {aluno.nome}, Matricula: {aluno.matricula}, Notas:{dict(aluno.notas)} ')
+            print(f'Aluno {aluno.nome}, Matricula: {aluno.matricula}, Materias:{list(aluno.notas)} ')
         

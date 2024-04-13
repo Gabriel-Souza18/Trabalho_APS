@@ -5,17 +5,16 @@ from .aluno import Aluno
 import sys
 sys.path.append('src')
 
-from escola import Turma,Materia
+from escola import Turma,Escola, Materia
 
-class Diretor(Pessoa):
+class Secretario(Pessoa):
     def __init__(self, nome, idade, registro,email ):
         super().__init__(nome, idade,email)
         self.registro = registro
-        self.professores = {}
-        self.turmas = {}
+        self.escola = Escola()
 
     def adicionar_turma(self, turma):
-        self.turmas[turma.nome_turma] = turma
+        self.escola.adicionar_turma(turma)
 
     def ler_turma(self, nome_turma):
         turma = Turma(nome_turma)

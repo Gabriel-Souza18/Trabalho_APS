@@ -132,13 +132,13 @@ def tela_materia(materia):
             break
     window.close()
 
-diretor =Diretor("Diretor", 50, '3216516',"diretor@hotmail.com")
-Turma1 = diretor.ler_turma("Turma1")
-diretor.adicionar_turma(Turma1)
+secretario =Secretario("Diretor", 50, '3216516',"diretor@hotmail.com")
+Turma1 = secretario.ler_turma("Turma1")
+secretario.adicionar_turma(Turma1)
 
 matematica = Materia("Matematica", "Pedro")
-matematica.adiconar_prova("Prova 1", 25)
-matematica.adiconar_prova("Prova 2", 25)
+matematica.adiconar_avaliacao("Prova 1", 25)
+matematica.adiconar_avaliacao("Prova 2", 25)
 matematica.adicionar_trabalho("TP 1", 15)
 matematica.adicionar_trabalho("TP 2", 15)
 matematica.adicionar_trabalho("TP 3", 15)

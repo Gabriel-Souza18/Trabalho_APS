@@ -2,13 +2,22 @@ from pessoas import *
 from escola import*
 
 
-diretor =Diretor("Diretor",50,'3216516')
-Turma1 = diretor.ler_turma("Turma1")
-diretor.adicionar_turma(Turma1)
+secretario =Secretario("Diretor",50,'3216516', "teste@gmail.com")
 
-ze = Professor("ze", 40,'2165116', 10100)
+Turma1 = secretario.ler_turma("Turma1")
+secretario.adicionar_turma(Turma1)
+
+ze = Professor("ze", 40,'2165116', 10100, "ze@gmail.com")
+carlos = Professor("carlos", 30,'252161',2000,"carlos@gmail.com")
 
 matematica = Materia("matematica", ze)
-ze.adicionar_materia(matematica)
+portugues = Materia("portugues", carlos)
 Turma1.adicionar_materia(matematica)
-Turma1.imprimir_turma()
+Turma1.adicionar_materia(portugues)
+
+prova = Avaliacao(matematica, "24/05/2024")
+ze.adicionar_prova(prova)
+
+print(list(Turma1.materias))
+matematica.imprimir_turmas()
+#Turma1.imprimir_turma()
