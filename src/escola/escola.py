@@ -3,7 +3,8 @@ from .materia import Materia
 from .turma import Turma
 
 class Escola():
-    def __init__(self):
+    def __init__(self, nome):
+        self.nome = nome
         self.secretarios = {}
         self.professores = {}
         self.turmas = {}
