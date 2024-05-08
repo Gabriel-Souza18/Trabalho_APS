@@ -1,3 +1,3 @@
-1234,5678
-5378,1234
-568,123
+Secretario,1234,SenhaForte
+Secretario,4321,SenhaFraca
+Professor,7410,teste

@@ -1,6 +1,7 @@
 from .professor import Professor
 from .pessoa import Pessoa
 from .aluno import Aluno
+from escola.escola import Escola 
 
 import sys
 sys.path.append('src')
@@ -8,10 +9,10 @@ sys.path.append('src')
 from escola import Turma,Escola, Materia
 
 class Secretario(Pessoa):
-    def __init__(self, nome, idade, registro,email ):
+    def __init__(self, nome, idade, registro,email, escola:Escola ):
         super().__init__(nome, idade,email)
         self.registro = registro
-        self.escola = Escola()
+        self.escola = escola
 
     def adicionar_turma(self, turma):
         self.escola.adicionar_turma(turma)

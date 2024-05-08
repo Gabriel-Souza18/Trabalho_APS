@@ -1,23 +1,38 @@
 from pessoas import *
 from escola import*
+from interface import*
 
 
-secretario =Secretario("Diretor",50,'3216516', "teste@gmail.com")
+def main():
+    escola = Escola(nome="Escola Fundamental")
 
-Turma1 = secretario.ler_turma("Turma1")
-secretario.adicionar_turma(Turma1)
+    jose_secretario = Secretario("Jose", 45, 1234, "jose@email.com", escola)
+    mario_secretario = Secretario("Mario", 50, 4321, "mario@email.com",escola)
 
-ze = Professor("ze", 40,'2165116', 10100, "ze@gmail.com")
-carlos = Professor("carlos", 30,'252161',2000,"carlos@gmail.com")
+    jorge_professor = Professor("Jorge", 26, 7410,1200.00,"jorge@gmail.com")
 
-matematica = Materia("matematica", ze)
-portugues = Materia("portugues", carlos)
-Turma1.adicionar_materia(matematica)
-Turma1.adicionar_materia(portugues)
+    turma1 = jose_secretario.ler_turma("Turma1")
+    turma2 = jose_secretario.ler_turma("Turma2")
 
-prova = Avaliacao(matematica, "24/05/2024")
-ze.adicionar_prova(prova)
+    tela_login = TelaLogin()
+    tela_secretario = TelaSecretario()
+    tela_aluno = TelaAluno()    
 
-print(list(Turma1.materias))
-matematica.imprimir_turmas()
-#Turma1.imprimir_turma()
+    #tela_login.cadastrar_usuario(usuario=jose_secretario,senha = "SenhaForte")
+    #tela_login.cadastrar_usuario(usuario=mario_secretario, senha="SenhaFraca")
+    #tela_login.cadastrar_usuario(usuario= jorge_professor, senha= "teste")
+    
+    tela_login.show_tela_login()
+    if(tela_login.entrou):
+        if tela_login.tipoUsuario == "Secretario":    
+            tela_secretario.show_tela_secretario()
+        
+        if tela_login.tipoUsuario == "Aluno":
+            print("TelaAluno")
+
+        if tela_login.tipoUsuario == "Professor":
+            print("Tela Professor")
+
+
+
+main()
