@@ -11,7 +11,7 @@ class TelaLogin():
         layout = [
             [sg.Text("Registro"), sg.Input(key="REGISTRO")],
             [sg.Text("Senha"), sg.Input(key="SENHA")],
-            [sg.Button("Entrar", key="ENTRAR"),sg.Button("Cadastrar", key= "CADASTRAR")]
+            [sg.Button("Entrar", key="ENTRAR")]
         ]
 
         window = sg.Window("Login", layout, size=(300,100))
@@ -29,12 +29,13 @@ class TelaLogin():
                     break
                 else:
                     sg.popup("Senha errada")
-            
+            ''' 
             if event == "CADASTRAR":
                 registro = values["REGISTRO"]
                 senha = values["SENHA"]
                 self.cadastrar_usuario(registro, senha)
-
+            '''
+                
     def conferir_senha(self, registro, senha):
         with open('senhas.txt', 'r') as arquivo:
             for linha in arquivo:
@@ -43,10 +44,10 @@ class TelaLogin():
                     self.tipoUsuario = tipo
                     return True
             return False
-        
+    '''   
     def cadastrar_usuario(self, usuario, senha):
         tipo_usuario = usuario.__class__.__name__
         registro = usuario.matricula if tipo_usuario == Aluno else usuario.registro
         with open('senhas.txt', 'a') as arquivo:
             arquivo.write(f'{tipo_usuario},{registro},{senha}\n')
-
+    '''
