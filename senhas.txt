@@ -1,3 +1,4 @@
-Secretario,1234,SenhaForte
+Secretario,1234,1234
 Secretario,4321,SenhaFraca
 Professor,7410,teste
+Aluno,1020,1020

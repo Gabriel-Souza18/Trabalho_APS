@@ -1,8 +1,11 @@
 from pessoas import*
+from escola import*
+from interface.telaSecretario import TelaSecretario
 import PySimpleGUI as sg
 
 class TelaLogin():
-    def __init__(self):
+    def __init__(self, escola: Escola):
+        self.escola = escola
         self.entrou = False
         self.tipoUsuario = None        
         sg.theme('DarkBlue12')
@@ -26,6 +29,9 @@ class TelaLogin():
                 senha = values["SENHA"]
                 if self.conferir_senha(registro,senha):
                     self.entrou = True
+                    if self.tipoUsuario == 'Secretario':
+                        tela_secretario = TelaSecretario(self.escola,registro)
+                        tela_secretario.show_tela_secretario() 
                     break
                 else:
                     sg.popup("Senha errada")
@@ -44,10 +50,6 @@ class TelaLogin():
                     self.tipoUsuario = tipo
                     return True
             return False
-    '''   
-    def cadastrar_usuario(self, usuario, senha):
-        tipo_usuario = usuario.__class__.__name__
-        registro = usuario.matricula if tipo_usuario == Aluno else usuario.registro
-        with open('senhas.txt', 'a') as arquivo:
-            arquivo.write(f'{tipo_usuario},{registro},{senha}\n')
-    '''
+     
+
+    

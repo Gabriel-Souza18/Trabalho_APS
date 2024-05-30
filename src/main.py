@@ -11,27 +11,16 @@ def main():
 
     jorge_professor = Professor("Jorge", 26, 7410,1200.00,"jorge@gmail.com")
 
-    turma1 = jose_secretario.ler_turma("Turma1")
-    turma2 = jose_secretario.ler_turma("Turma2")
-
-    tela_login = TelaLogin()
-    tela_secretario = TelaSecretario()
-    tela_aluno = TelaAluno()    
+    escola.adicionar_turma(jose_secretario.ler_turma("Turma1"))
+    escola.adicionar_turma(jose_secretario.ler_turma("Turma2"))
+    
+    tela_login=TelaLogin(escola)
 
     #tela_login.cadastrar_usuario(usuario=jose_secretario,senha = "SenhaForte")
     #tela_login.cadastrar_usuario(usuario=mario_secretario, senha="SenhaFraca")
     #tela_login.cadastrar_usuario(usuario= jorge_professor, senha= "teste")
     
     tela_login.show_tela_login()
-    if(tela_login.entrou):
-        if tela_login.tipoUsuario == "Secretario":    
-            tela_secretario.show_tela_secretario()
-        
-        if tela_login.tipoUsuario == "Aluno":
-            print("TelaAluno")
-
-        if tela_login.tipoUsuario == "Professor":
-            print("Tela Professor")
 
 
 
