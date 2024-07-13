@@ -1,20 +1,12 @@
-from escola import *
-from pessoas import *
+from src.pessoas import Professor
+from src.escola import Avaliacao
 
-class Materia():
-    def __init__(self, nome, professor):
+
+class Materia:
+    def __init__(self, nome, professor: Professor):
         self.nome = nome
         self.professor = professor
         self.avaliacoes = []
-        self.turmas = []
-        
-    def adicionar_turma(self, turma):
-        self.turmas.append(turma)
 
-    def adicionar_avaliacao(self, avaliacao):
+    def adicionar_avaliacao(self, avaliacao: Avaliacao):
         self.avaliacoes.append(avaliacao)
-    
-    def imprimir_turmas(self):
-        for turma in self.turmas:
-            print(turma.nome_turma)
-

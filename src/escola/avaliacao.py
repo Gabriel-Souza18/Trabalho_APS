@@ -1,5 +1,5 @@
 from escola import *
-from pessoas import *
+from src.pessoas.aluno import *
 
 class Avaliacao():
     def __init__(self,materia, data):
