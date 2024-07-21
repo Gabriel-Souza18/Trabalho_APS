@@ -1,4 +1,4 @@
 from .Pessoa import Pessoa
 from .Aluno import Aluno
-from .Diretor import Diretor
+from .Secretario import Secretario
 from .Professor import Professor
