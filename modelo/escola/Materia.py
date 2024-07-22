@@ -1,9 +1,9 @@
 from ..pessoas.Professor import Professor
 
 class Materia:
-    def __init__(self, nome, Profesor):
+    def __init__(self, nome, Professor):
         self.nome = nome
-        self.Professor = Profesor
+        self.Professor = Professor
         self.provas = {}
         self.trabalhos = {}
         

@@ -1,1 +1,0 @@
-Braian/ 20/ 202202/ {<modelo.escola.Materia.Materia object at 0x000001BED5579908>: 8, <modelo.escola.Materia.Materia object at 0x000001BED7803B88>: 7}/ <modelo.escola.Turma.Turma object at 0x000001BED77A5EC8>/ Braian@gmail.com
