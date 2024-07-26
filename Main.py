@@ -1,13 +1,15 @@
 from modelo.pessoas import *
 from modelo.escola import *
-from persistencia.dados import Escola, Gravador
+from persistencia import Escola, Gravador, Leitor
 
 from visao.telaInicialAluno import *
+from visao.telaLogin import *
 
+CAMINHO = "persistencia/dados/"
 
 def main():
     escola = Escola("Escola Estadual")
-    diretor = Secretario("Secretario", 50, "secretario@hotmail.com", 202254, 4500.00)
+    diretor = Secretario("Matheus Viana", 50, "MatheusV@hotmail.com", 202254, 4500.00)
 
     gabriel = Professor("Gabriel", 28, "Gabriel@gmail.com", 202251, 2500.00)
     gustavo = Professor("Gustavo", 30, "Gustavo@gmail.com", 202253, 2000.00)
@@ -29,14 +31,21 @@ def main():
     escola.add_secretario(diretor)
 
     gravador = Gravador(escola)
-    gravador.gravar_secretarios("secretarios.txt")
-    gravador.gravar_alunos("alunos.txt")
-    gravador.gravar_professores("professores.txt")
+    gravador.gravar_secretarios(CAMINHO + "secretarios.txt")
+    gravador.gravar_alunos(CAMINHO + "alunos.txt")
+    gravador.gravar_professores(CAMINHO + "professores.txt")
 
-    # Funcionou!
+    # Funcionando!
 
-    # TelaInicial(aluno, turma)
+    leitor = Leitor(escola)
+    leitor.lista_professores()
+    leitor.lista_secretarios()
+    leitor.lista_alunos()
 
+    # Funcionando!
+
+    telaLogin()
+    #TelaInicial(aluno, turma)
 
 if __name__ == "__main__":
     main()

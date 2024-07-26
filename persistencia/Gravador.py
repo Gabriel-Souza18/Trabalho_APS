@@ -1,4 +1,4 @@
-from persistencia.dados import Escola
+from persistencia import Escola
 
 
 class Gravador:
@@ -13,7 +13,14 @@ class Gravador:
     def gravar_alunos(self, caminho):
         arquivo = open(caminho, "w")
         for aluno in self.escola.Alunos.values():
-            arquivo.write(f"{aluno.nome}/ {aluno.idade}/ {aluno.matricula}/ {dict(aluno.notas)}/ {aluno.turma}/ {aluno.email}\n")
+            arquivo.write(f"{aluno.nome}/ {aluno.idade}/ {aluno.matricula}/")
+
+            for materia,nota in aluno.notas.items():
+                arquivo.write(f" {materia.nome}:{nota}/")
+
+            arquivo.write(f" {aluno.turma.nome_turma}/ {aluno.email}\n")
+
+                          
 
     def gravar_secretarios(self, caminho):
         with open(caminho, "w") as arquivo:

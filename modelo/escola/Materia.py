@@ -7,4 +7,3 @@ class Materia:
         self.provas = {}
         self.trabalhos = {}
         
-        
