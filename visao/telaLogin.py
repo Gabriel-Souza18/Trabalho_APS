@@ -1,7 +1,10 @@
 import PySimpleGUI as sg
 from persistencia.Leitor import Leitor
+from persistencia.Escola import Escola
 
-def telaLogin():
+from visao.telaInicialAluno import *
+
+def telaLogin(escola):
     layout = [
         [sg.Text('Registro: ', font=("Arial 14"))],
         [sg.Input(key='REGISTRO', font=("Arial 14"))],
@@ -27,11 +30,14 @@ def telaLogin():
 
             if resultado!= 'N':
                 if(resultado == 'A'):
-                    print("Aluno")
+                    aluno = escola.get_aluno(registro)
+                    print(aluno.nome)
                 elif(resultado == 'P'):
-                    print("Professor")
+                    professor = escola.get_professor(registro)
+                    print(professor.nome)
                 else:
-                    print("Secretario")
+                    secretario = escola.get_secretario(registro)
+                    print(secretario.nome)
 
                 # Tenta criar uma função no leitor que recebe o registro e retorna a Pessoa.
                 # Ai pega os dados e abrimos o menu proprio daquela pessoa

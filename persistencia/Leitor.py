@@ -1,50 +1,48 @@
+import json
 
-from persistencia import Escola
-
-CAMINHO = "persistencia/dados/"
-
+import self
+from persistencia.dados import Escola
 class Leitor():
     def __init__(self, escola: Escola):
         self.escola = escola
 
-    def lista_secretarios(self): 
-        with open(CAMINHO + "secretarios.txt", 'r') as arquivo:
-            for linha in arquivo:
-                nome, idade, email, registro, salario = linha.strip().split("/ ")
-                self.escola.add_secretario(nome, idade, email, registro, salario)
+    def lista_secretarios(self, caminho):
+        with open(caminho, "r") as arquivo:
+            secretarios = json.load(arquivo)
+            for secretario in secretarios:
+                self.escola.add_secretario(secretario["nome"], secretario["idade"], secretario["email"],
+                                           secretario["registro"], secretario["salario"])
 
-    def lista_professores(self): #Funcionando
-        with open(CAMINHO + "professores.txt", 'r') as arquivo:
-            for linha in arquivo:
-                nome, idade, email, registro, salario = linha.strip().split("/ ")
-                self.escola.add_professor(nome, idade, email, registro, salario)
+    def lista_professores(self, caminho):
+        with open(caminho, "r") as arquivo:
+            professores = json.load(arquivo)
+            for professor in professores:
+                self.escola.add_professor(professor["nome"], professor["idade"], professor["email"],
+                                          professor["registro"], professor["salario"])
+
+    def lista_alunos(self, caminho):
+        with open(caminho, "r") as arquivo:
+            alunos = json.load(arquivo)
+            for aluno in alunos:
+                self.escola.add_aluno(aluno['nome'], aluno['idade'],aluno['email'],
+                                      aluno['matricula'], aluno['turma'], aluno['notas'])
+
+        for aluno in self.escola.Alunos.values():
+            for turma in self.escola.Turmas:
+                if aluno.turma == turma.nome_turma:
+                    aluno.turma = turma
+                    turma.alunos.append(alunos)
 
 
-    def lista_alunos(self):
-        with open(CAMINHO + "alunos.txt", 'r') as arquivo:
-            for linha in arquivo:
-                dados = linha.strip().split("/ ")
-                nome = dados[0]
-                idade = dados[1]
-                matricula = dados[2]
-                
-                notas = {}
-                i = 3
-                while ":" in dados[i]:
-                    disciplina, nota = dados[i].split(":")
-                    notas[disciplina] = float(nota)
-                    i += 1
-                
-                turma = dados[i]
-                email = dados[i + 1]
-                
-                self.escola.add_aluno(nome, idade, email, matricula, turma, notas)
 
-    def testar_senha(self, registro, senha):
-        with open(CAMINHO + "registros.txt", 'r') as arquivo:
-            for linha in arquivo:
-                partes = linha.strip().split(', ')
-                if registro == partes[0] and senha == partes[1]:
-                    return partes[2].strip().replace("'", "")
-                
-        return "N"
+
+
+
+
+def parse_notas(notas_str):
+    notas_list = notas_str.split(", ")  # Divide a string em uma lista de pares chave-valor
+    notas_dict = {}
+    for nota in notas_list:
+        materia, valor = nota.split(": ")
+        notas_dict[materia] = int(valor)
+    return notas_dict

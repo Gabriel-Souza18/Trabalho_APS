@@ -44,7 +44,7 @@ def main():
 
     # Funcionando!
 
-    telaLogin()
+    registro = telaLogin(escola) # Funcionando!
     #TelaInicial(aluno, turma)
 
 if __name__ == "__main__":

@@ -1,0 +1,18 @@
+[
+    {
+        "nome": "Teste2",
+        "idade": 21,
+        "email": "teste@gmail.com",
+        "matricula": 152123,
+        "turma": "7 ano A",
+        "notas": {}
+    },
+    {
+        "nome": "Braian",
+        "idade": 20,
+        "email": "Braian@gmail.com",
+        "matricula": 202202,
+        "turma": "7 ano A",
+        "notas": {}
+    }
+]
