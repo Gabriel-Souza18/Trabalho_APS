@@ -1,5 +1,5 @@
 from modelo.pessoas import Secretario, Professor, Aluno
-
+from collections import OrderedDict
 
 class Escola:
     def __init__(self, nome):
@@ -42,15 +42,17 @@ class Escola:
             # Se for passado um objeto Aluno, adiciona diretamente
             aluno = args[0]
             self.Alunos[aluno.matricula] = aluno
-        elif len(args) == 6:
+        elif len(args) == 5:
             # Se forem passados atributos individuais, cria um novo aluno
-            nome, idade, email, matricula, turma, notas = args
-            notas = kwargs.get('notas', {})
-            novo_aluno = Aluno(nome, idade, email, matricula, turma, notas)
+            nome, idade, email, matricula, turma = args
+
+            novo_aluno = Aluno(nome, idade, email, matricula, turma)
             self.Alunos[novo_aluno.matricula] = novo_aluno
         else:
             raise ValueError("Número incorreto de argumentos!")
 
+    def organizar_alunos(self):
+        self.Alunos = OrderedDict(sorted(self.Alunos.items(), key=lambda item: item[0]))
     def imprimir_escola(self):
         print("-----Alunos-----")
         for aluno in self.Alunos.values():

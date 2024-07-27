@@ -1,5 +1,10 @@
 import json
-from persistencia.dados import Escola
+import pickle
+
+from modelo.escola import Materia
+from persistencia import Escola
+
+
 class Gravador:
     def __init__(self, escola: Escola):
         self.escola = escola
@@ -18,6 +23,7 @@ class Gravador:
             lista_professores.append(dados_professor)
         with open(caminho, "w") as arquivo:
             json.dump(lista_professores, arquivo, indent=4)
+
     def gravar_alunos(self, caminho):
         lista_alunos = []
 
@@ -28,11 +34,11 @@ class Gravador:
                 "email": aluno.email,
                 "matricula": aluno.matricula,
                 "turma": aluno.turma.nome_turma,
-                "notas": {str(materia.nome): nota for materia, nota in aluno.notas.items()}  # Convertendo as chaves para strings
             }
             lista_alunos.append(dados_aluno)
         with open(caminho, "w") as arquivo:
             json.dump(lista_alunos, arquivo, indent=4)
+
     def gravar_secretarios(self, caminho):
         lista_secretarios = []
         for secretario in self.escola.Secretarios.values():
@@ -46,4 +52,15 @@ class Gravador:
             lista_secretarios.append(dados_secretario)
 
         with open(caminho, "w") as arquivo:
-                json.dump(lista_secretarios, arquivo, indent=4)
+            json.dump(lista_secretarios, arquivo, indent=4)
+
+    def gravar_materia(self, caminho, materia: Materia):
+        materia_gravar = {
+            "nome": materia.nome,
+            "professor": materia.professor.nome,
+            "notas": list(materia.notas.items()),
+            "provas": list(materia.provas.items()),
+            "trabalhos": list(materia.trabalhos.items())
+        }
+        with open(caminho + materia.nome + ".Json", "w") as arquivo:
+            json.dump(materia_gravar, arquivo, indent=4)

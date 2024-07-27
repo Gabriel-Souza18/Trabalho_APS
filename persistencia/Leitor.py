@@ -1,7 +1,8 @@
 import json
+import pickle
 
 import self
-from persistencia.dados import Escola
+from persistencia import Escola
 class Leitor():
     def __init__(self, escola: Escola):
         self.escola = escola
@@ -25,7 +26,7 @@ class Leitor():
             alunos = json.load(arquivo)
             for aluno in alunos:
                 self.escola.add_aluno(aluno['nome'], aluno['idade'],aluno['email'],
-                                      aluno['matricula'], aluno['turma'], aluno['notas'])
+                                      aluno['matricula'], aluno['turma'])
 
         for aluno in self.escola.Alunos.values():
             for turma in self.escola.Turmas:
