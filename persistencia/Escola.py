@@ -53,6 +53,7 @@ class Escola:
 
     def organizar_alunos(self):
         self.Alunos = OrderedDict(sorted(self.Alunos.items(), key=lambda item: item[0]))
+
     def imprimir_escola(self):
         print("-----Alunos-----")
         for aluno in self.Alunos.values():
@@ -63,3 +64,13 @@ class Escola:
         print("-----Secretarios-----")
         for secretario in self.Secretarios.values():
             print(secretario.nome)
+
+
+    def get_secretario(self, registro):
+        return self.Secretarios[int(registro)]
+
+    def get_professor(self, registro):
+        return self.Professores[int(registro)]
+
+    def get_aluno(self, registro):
+        return self.Alunos[int(registro)]

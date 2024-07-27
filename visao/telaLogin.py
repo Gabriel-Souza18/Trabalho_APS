@@ -28,6 +28,8 @@ def telaLogin(escola):
 
             resultado = Leitor.testar_senha(Leitor, registro, senha)
 
+            print(resultado)
+
             if resultado!= 'N':
                 if(resultado == 'A'):
                     aluno = escola.get_aluno(registro)

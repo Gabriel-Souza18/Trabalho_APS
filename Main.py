@@ -18,7 +18,6 @@ def main():
 
     leitor = Leitor(escola)
 
-
     leitor.lista_professores(CAMINHO + "professores.Json")
     leitor.lista_secretarios(CAMINHO + "secretarios.Json")
     leitor.lista_alunos(CAMINHO + "alunos.Json")
@@ -33,18 +32,17 @@ def main():
     turma7B.materias.append(geografia)
     turma7B.materias.append(portugues)
 
-    '''gabriel = Professor("Gabriel", 28, "Gabriel@gmail.com", 202251, 2500.00)
+    gabriel = Professor("Gabriel", 28, "Gabriel@gmail.com", 202251, 2500.00)
     gustavo = Professor("Gustavo", 30, "Gustavo@gmail.com", 202253, 2000.00)
-    aluno = Aluno("Braian", 20, "Braian@gmail.com", 202202, turma, {geografia: 8, portugues: 7})
+    aluno = Aluno("Braian", 20, "Braian@gmail.com", 202202, turma7A)
     
-    turma.alunos.append(aluno)
+    turma7A.alunos.append(aluno)
     
-    # testes com gravador e leitor
+    #testes com gravador e leitor
     escola.add_aluno(aluno)
     escola.add_professor(gabriel)
     escola.add_professor(gustavo)
     escola.add_secretario(diretor)
-    '''
 
     gravador = Gravador(escola)
     gravador.gravar_materia(CAMINHO, geografia)
@@ -55,12 +53,12 @@ def main():
     # Funcionando!
 
 
-
     # Funcionando!
     escola.imprimir_escola()
     escola.Alunos[202202].imprimir()
 
-#    registro = telaLogin(escola) # Funcionando!
+    registro = telaLogin(escola) # Funcionando!
+    print("\n",registro)
     #TelaInicial(aluno, turma)
 
 if __name__ == "__main__":

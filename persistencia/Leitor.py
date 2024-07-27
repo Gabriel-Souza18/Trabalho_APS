@@ -1,8 +1,10 @@
 import json
 import pickle
 
-import self
 from persistencia import Escola
+
+CAMINHO = "persistencia/dados/"
+
 class Leitor():
     def __init__(self, escola: Escola):
         self.escola = escola
@@ -33,6 +35,16 @@ class Leitor():
                 if aluno.turma == turma.nome_turma:
                     aluno.turma = turma
                     turma.alunos.append(alunos)
+
+    def testar_senha(self, registro, senha):
+        with open(CAMINHO + "registros.txt", 'r') as arquivo:
+            for linha in arquivo:
+                partes = linha.strip().split(', ')
+                if registro == partes[0] and senha == partes[1]:
+                    return partes[2].strip().replace("'", "")
+
+        return "N"
+
 
 
 
