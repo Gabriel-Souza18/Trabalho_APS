@@ -1,0 +1,37 @@
+[
+    {
+        "registro": "202202",
+        "senha": "123",
+        "tipo": "A"
+    },
+        {
+        "registro": "202203",
+        "senha": "234",
+        "tipo": "A"
+    },
+    {
+        "registro": "202204",
+        "senha": "345",
+        "tipo": "A"
+    },
+    {
+        "registro": "202205",
+        "senha": "456",
+        "tipo": "A"
+    },
+    {
+        "registro": "202251",
+        "senha": "000",
+        "tipo": "P"
+    },
+    {
+        "registro": "202253",
+        "senha": "010",
+        "tipo": "P"
+    },
+    {
+        "registro": "202254",
+        "senha": "100",
+        "tipo": "S"
+    }
+]

@@ -1,5 +1,5 @@
 from modelo.pessoas import Secretario, Professor, Aluno
-
+from modelo.escola import Materia
 
 class Escola:
     def __init__(self, nome):
@@ -7,6 +7,7 @@ class Escola:
         self.Secretarios = {}
         self.Professores = {}
         self.Alunos = {}
+        self.Materias = {}
 
     def add_secretario(self, *args, **kwargs):
         if len(args) == 1 and isinstance(args[0], Secretario):
@@ -46,3 +47,44 @@ class Escola:
             self.Alunos[novo_aluno.matricula] = novo_aluno
         else:
             raise ValueError("Número incorreto de argumentos!")
+
+    def add_materia(self, materia):
+        self.Materias[materia.nome] = materia
+
+    def get_secretario(self, registro):
+        return self.Secretarios.get(registro, None)
+
+    def get_professor(self, registro):
+        return self.Professores.get(registro, None)
+
+    def get_professor_por_nome(self, nome):
+        for professor in self.Professores.values():
+            if professor.nome == nome:
+                return professor
+        return None
+
+    def get_aluno(self, registro):
+        return self.Alunos.get(registro, None)
+
+    def imprimir_tudo(self):
+        print("Secretarios:")
+        for secretario in self.Secretarios.values():
+            print(secretario)
+
+        print("\nProfessores:")
+        for professor in self.Professores.values():
+            print(professor)
+
+        print("\nAlunos:")
+        for aluno in self.Alunos.values():
+            print(aluno)
+
+        print("\nMaterias:")
+        for materia in self.Materias.values():
+            print(f"Nome: {materia.nome}, Professor: {materia.professor.nome}, Turma: {materia.turma}")
+            print("  Provas:")
+            for prova, nota in materia.provas.items():
+                print(f"    {prova}: {nota}")
+            print("  Trabalhos:")
+            for trabalho, nota in materia.trabalhos.items():
+                print(f"    {trabalho}: {nota}")

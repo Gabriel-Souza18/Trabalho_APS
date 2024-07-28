@@ -1,0 +1,46 @@
+[
+    {
+        "nome": "Braian",
+        "idade": 20,
+        "email": "Braian@gmail.com",
+        "matricula": "202202",
+        "turma": "7° ano A",
+        "notas": {
+            "Geografia": 4,
+            "Português": 7
+        }
+    },
+    {
+        "nome": "Alice",
+        "idade": 21,
+        "email": "alice@example.com",
+        "matricula": "202203",
+        "turma": "7° ano B",
+        "notas": {
+            "Matemática": 9,
+            "Ciências": 8
+        }
+    },
+    {
+        "nome": "Carlos",
+        "idade": 19,
+        "email": "carlos@example.com",
+        "matricula": "202204",
+        "turma": "7° ano A",
+        "notas": {
+            "História": 7,
+            "Inglês": 8
+        }
+    },
+    {
+        "nome": "Daniela",
+        "idade": 18,
+        "email": "daniela@example.com",
+        "matricula": "202205",
+        "turma": "7° ano B",
+        "notas": {
+            "Educação Física": 10,
+            "Artes": 9
+        }
+    }
+]

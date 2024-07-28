@@ -8,5 +8,7 @@ class Aluno(Pessoa):
         self.turma = turma
         self.notas = notas
 
-    def imprimir(self):
-        print(f"{self.nome} - {self.idade}: {self.email}, {self.matricula} ")
+    def __str__(self):
+        return f"Aluno(nome={self.nome}, idade={self.idade}, email={self.email}, matricula={self.matricula}, turma={self.turma}, notas={self.notas})"
+
+    __repr__ = __str__

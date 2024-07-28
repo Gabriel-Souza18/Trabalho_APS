@@ -1,0 +1,26 @@
+[
+    {
+        "nome": "Geografia",
+        "professor": "Gabriel",
+        "turma": "7° ano A",
+        "provas": {
+            "Prova 1": 8.5,
+            "Prova 2": 7.0
+        },
+        "trabalhos": {
+            "Trabalho 1": 9.0
+        }
+    },
+    {
+        "nome": "Português",
+        "professor": "Gustavo",
+        "turma": "7° ano B",
+        "provas": {
+            "Prova 1": 8.0,
+            "Prova 2": 7.5
+        },
+        "trabalhos": {
+            "Trabalho 1": 8.5
+        }
+    }
+]
