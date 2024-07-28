@@ -1,16 +1,58 @@
 [
     {
         "nome": "Gabriel",
-        "idade": 28,
-        "email": "Gabriel@gmail.com",
+        "idade": 35,
+        "email": "gabriel@example.com",
         "registro": "202251",
-        "salario": 2500.0
+        "salario": 3000
     },
     {
         "nome": "Gustavo",
-        "idade": 30,
-        "email": "Gustavo@gmail.com",
+        "idade": 40,
+        "email": "gustavo@example.com",
+        "registro": "202252",
+        "salario": 3200
+    },
+    {
+        "nome": "Carlos",
+        "idade": 45,
+        "email": "carlos.prof@example.com",
         "registro": "202253",
-        "salario": 2000.0
+        "salario": 3100
+    },
+    {
+        "nome": "Alice",
+        "idade": 29,
+        "email": "alice.prof@example.com",
+        "registro": "202254",
+        "salario": 3000
+    },
+    {
+        "nome": "Daniela",
+        "idade": 33,
+        "email": "daniela.prof@example.com",
+        "registro": "202255",
+        "salario": 2950
+    },
+    {
+        "nome": "Fernando",
+        "idade": 38,
+        "email": "fernando@example.com",
+        "registro": "202256",
+        "salario": 3300
+    },
+    {
+        "nome": "Mariana",
+        "idade": 27,
+        "email": "mariana@example.com",
+        "registro": "202257",
+        "salario": 2900
+    },
+    {
+        "nome": "Helena",
+        "idade": 31,
+        "email": "helena@example.com",
+        "registro": "202258",
+        "salario": 3000
     }
 ]

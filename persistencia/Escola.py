@@ -1,5 +1,5 @@
 from modelo.pessoas import Secretario, Professor, Aluno
-from modelo.escola import Materia
+from modelo.escola import Materia, Turma
 
 class Escola:
     def __init__(self, nome):
@@ -8,14 +8,13 @@ class Escola:
         self.Professores = {}
         self.Alunos = {}
         self.Materias = {}
+        self.Turmas = {}
 
     def add_secretario(self, *args, **kwargs):
         if len(args) == 1 and isinstance(args[0], Secretario):
-            # Se for passado um objeto Secretario, adiciona diretamente
             secretario = args[0]
             self.Secretarios[secretario.registro] = secretario
         elif len(args) == 5:
-            # Se forem passados atributos individuais, cria um novo secretário
             nome, idade, email, registro, salario = args
             novo_secretario = Secretario(nome, idade, email, registro, salario)
             self.Secretarios[novo_secretario.registro] = novo_secretario
@@ -24,11 +23,9 @@ class Escola:
 
     def add_professor(self, *args, **kwargs):
         if len(args) == 1 and isinstance(args[0], Professor):
-            # Se for passado um objeto Professor, adiciona diretamente
             professor = args[0]
             self.Professores[professor.registro] = professor
         elif len(args) == 5:
-            # Se forem passados atributos individuais, cria um novo professor
             nome, idade, email, registro, salario = args
             novo_professor = Professor(nome, idade, email, registro, salario)
             self.Professores[novo_professor.registro] = novo_professor
@@ -37,19 +34,23 @@ class Escola:
 
     def add_aluno(self, *args, **kwargs):
         if len(args) == 1 and isinstance(args[0], Aluno):
-            # Se for passado um objeto Aluno, adiciona diretamente
             aluno = args[0]
             self.Alunos[aluno.matricula] = aluno
         elif len(args) == 6:
-            # Se forem passados atributos individuais, cria um novo aluno
             nome, idade, email, matricula, turma, notas = args
             novo_aluno = Aluno(nome, idade, email, matricula, turma, notas)
             self.Alunos[novo_aluno.matricula] = novo_aluno
+            if turma not in self.Turmas:
+                self.Turmas[turma] = Turma(turma)
+            self.Turmas[turma].alunos.append(novo_aluno)
         else:
             raise ValueError("Número incorreto de argumentos!")
 
     def add_materia(self, materia):
         self.Materias[materia.nome] = materia
+        if materia.turma not in self.Turmas:
+            self.Turmas[materia.turma] = Turma(materia.turma)
+        self.Turmas[materia.turma].materias.append(materia)
 
     def get_secretario(self, registro):
         return self.Secretarios.get(registro, None)
@@ -65,6 +66,18 @@ class Escola:
 
     def get_aluno(self, registro):
         return self.Alunos.get(registro, None)
+
+    def get_turma_do_aluno(self, aluno):
+        for turma in self.Turmas.values():
+            if aluno in turma.alunos:
+                return turma
+        return None
+
+    def get_materia_por_nome(self, nome_materia):
+        for materia in self.Materias.values():
+            if materia.nome == nome_materia:
+                return materia
+        return None
 
     def imprimir_tudo(self):
         print("Secretarios:")
@@ -88,3 +101,8 @@ class Escola:
             print("  Trabalhos:")
             for trabalho, nota in materia.trabalhos.items():
                 print(f"    {trabalho}: {nota}")
+
+        print("\nTurmas:")
+        for turma in self.Turmas.values():
+            print(turma)
+

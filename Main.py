@@ -10,11 +10,8 @@ def main():
 
     carregarDados(escola)
 
-
-
-    registro = telaLogin(escola) # Funcionando!
-    #TelaInicial(aluno, turma)
-    salvarDados(escola)
+    telaLogin(escola) # Funcionando!
+    #salvarDados(escola)
 
 
 def carregarDados(escola):
@@ -25,7 +22,6 @@ def carregarDados(escola):
     leitor.lista_materias()
 
     escola.imprimir_tudo()
-
 
 
 def salvarDados(escola):

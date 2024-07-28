@@ -1,6 +1,6 @@
 import PySimpleGUI as sg
 
-def TelaInicial(aluno, turma):
+def TelaInicial(aluno, turma, escola):
     sg.theme('DarkBlue12')
     
     layout=[
@@ -16,37 +16,35 @@ def TelaInicial(aluno, turma):
             break
 
         if event == "NOTAS":
-            tela_notas(aluno, turma)
+            tela_notas(aluno, turma, escola)
 
 
         if event == "TURMA":
             tela_turma(turma)
     window.close()
 
-def tela_notas(aluno, turma):
-    layout = [[sg.Text("Clique na materia para ver detalhes", font=("Arial 14"))],
-        [sg.Table(values=[],
-                  
-                  headings=["Matéria", "Nota"], 
-                  key="Tabela", 
-                  auto_size_columns= False,
-                  max_col_width=17,
-                  def_col_width=17,
-                  justification='center',
-                  enable_events = True)],
-        [sg.Button('FECHAR')]
-    ]
+def tela_notas(aluno, turma, escola):
+    layout = [[sg.Text("Clique na matéria para ver detalhes", font=("Arial 14"))],
+              [sg.Table(values=[],
+                        headings=["Matéria", "Nota"],
+                        key="Tabela",
+                        auto_size_columns=False,
+                        max_col_width=17,
+                        def_col_width=17,
+                        justification='center',
+                        enable_events=True)],
+              [sg.Button('FECHAR')]
+              ]
     
-    window = sg.Window('Notas', layout, finalize=True, size=(350,250))
+    window = sg.Window('Notas', layout, finalize=True, size=(350, 250))
 
     linhas_tabela = []
 
     for materia, nota in aluno.notas.items():
-        linhas_tabela.append([materia.nome, nota])
-        
+        linhas_tabela.append([materia, nota])
 
-    linhas_tabela.sort(key= lambda x: x[0])
-        
+    linhas_tabela.sort(key=lambda x: x[0])
+
     window['Tabela'].update(values=linhas_tabela)
 
     while True:
@@ -59,10 +57,8 @@ def tela_notas(aluno, turma):
                 linha_clicada = values['Tabela'][0]  # Obtém o índice da linha clicada
 
                 nome_materia = linhas_tabela[linha_clicada][0]
-                lista_materias = list(aluno.notas.keys())
-                materia = lista_materias[linha_clicada]
+                materia = escola.get_materia_por_nome(nome_materia)
                 tela_materia(materia)
-                
 
     window.close()
 
@@ -111,7 +107,7 @@ def tela_materia(materia):
         dados_arvore.insert("CT", trabalho, trabalho, [(valor,)])
 
     layout = [
-        [sg.Text(f"{materia.nome} - Professor: {materia.Professor.nome}")],[
+        [sg.Text(f"{materia.nome} - Professor: {materia.professor.nome}")],[
             sg.Tree(data=dados_arvore,
                  headings=["Valor"],
                  key="Arvore",

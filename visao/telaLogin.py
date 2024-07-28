@@ -26,12 +26,18 @@ def telaLogin(escola):
             
             Leitor.testar_senha(Leitor, registro, senha)
 
+
             resultado = Leitor.testar_senha(Leitor, registro, senha)
 
             if resultado!= 'N':
                 if(resultado == 'A'):
                     aluno = escola.get_aluno(registro)
+                    turma = escola.get_turma_do_aluno(aluno)
+
                     print(aluno.nome)
+                    print(turma.nome_turma)
+
+                    TelaInicial(aluno, turma, escola)
                 elif(resultado == 'P'):
                     professor = escola.get_professor(registro)
                     print(professor.nome)
