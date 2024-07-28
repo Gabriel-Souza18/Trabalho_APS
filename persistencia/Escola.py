@@ -52,6 +52,9 @@ class Escola:
             self.Turmas[materia.turma] = Turma(materia.turma)
         self.Turmas[materia.turma].materias.append(materia)
 
+    def get_materias(self):
+        return self.Materias.values()
+
     def get_secretario(self, registro):
         return self.Secretarios.get(registro, None)
 

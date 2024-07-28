@@ -11,7 +11,7 @@ def main():
     carregarDados(escola)
 
     telaLogin(escola) # Funcionando!
-    #salvarDados(escola)
+    salvarDados(escola)
 
 
 def carregarDados(escola):
@@ -20,8 +20,6 @@ def carregarDados(escola):
     leitor.lista_secretarios()
     leitor.lista_alunos()
     leitor.lista_materias()
-
-    escola.imprimir_tudo()
 
 
 def salvarDados(escola):

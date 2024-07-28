@@ -2,41 +2,44 @@ import PySimpleGUI as sg
 
 def TelaInicial(aluno, turma, escola):
     sg.theme('DarkBlue12')
-    
-    layout=[
-        [sg.Text('Nome: '+aluno.nome, font=("Arial 14")), sg.Text('', size=(15,1)), sg.Text(f'Matricula: '+ str(aluno.matricula), font=("Arial 14"))],        
-        [sg.Text(aluno.email, font=("Arial 14"))],
-        [sg.Button("Ver Notas", key = "NOTAS", size=(25,20)),sg.Button("Ver Turma", key = "TURMA",size=(25,10))]
+
+    layout = [
+        [sg.Text('Nome: ' + aluno.nome, font=("Arial", 14)), sg.Text('', size=(15, 1)), sg.Text(f'Matricula: ' + str(aluno.matricula), font=("Arial", 14))],
+        [sg.Text(aluno.email, font=("Arial", 14))],
+        [sg.Button("Ver Notas", key="NOTAS", size=(15, 1), font=("Arial", 14)), sg.Button("Ver Turma", key="TURMA", size=(15, 1), font=("Arial", 14))]
     ]
-    window = sg.Window("Aluno",layout, size=(450,130))
+    window = sg.Window("Aluno", layout, size=(450, 150), element_justification='center', finalize=True)
 
     while True:
         event, values = window.read()
-        if event == sg.WIN_CLOSED : 
+        if event == sg.WINDOW_CLOSED:
             break
 
         if event == "NOTAS":
+            window.close()
             tela_notas(aluno, turma, escola)
 
-
         if event == "TURMA":
+            window.close()
             tela_turma(turma)
     window.close()
 
 def tela_notas(aluno, turma, escola):
-    layout = [[sg.Text("Clique na matéria para ver detalhes", font=("Arial 14"))],
-              [sg.Table(values=[],
-                        headings=["Matéria", "Nota"],
-                        key="Tabela",
-                        auto_size_columns=False,
-                        max_col_width=17,
-                        def_col_width=17,
-                        justification='center',
-                        enable_events=True)],
-              [sg.Button('FECHAR')]
-              ]
-    
-    window = sg.Window('Notas', layout, finalize=True, size=(350, 250))
+    layout = [
+        [sg.Text("Clique na matéria para ver detalhes", font=("Arial", 14), pad=((0, 0), (10, 10)))],
+        [sg.Table(values=[],
+                  headings=["Matéria", "Nota"],
+                  key="Tabela",
+                  auto_size_columns=False,
+                  col_widths=[20, 10],
+                  justification='center',
+                  enable_events=True,
+                  font=("Arial", 14),
+                  row_height=25)],
+        [sg.Button('Voltar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0))), sg.Button('Fechar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0)))]
+    ]
+
+    window = sg.Window('Notas', layout, finalize=True, size=(450, 400), element_justification='center')
 
     linhas_tabela = []
 
@@ -49,8 +52,12 @@ def tela_notas(aluno, turma, escola):
 
     while True:
         event, values = window.read()
-        if event == sg.WINDOW_CLOSED or event == 'FECHAR':
+        if event == sg.WINDOW_CLOSED or event == 'Fechar':
             break
+
+        elif event == 'Voltar':
+            window.close()
+            return  # Retorna para a tela anterior
 
         elif event == 'Tabela':
             if values['Tabela']:
@@ -62,37 +69,41 @@ def tela_notas(aluno, turma, escola):
 
     window.close()
 
-    
 def tela_turma(turma):
     layout = [
+        [sg.Text(f"Turma: {turma.nome_turma}", font=("Arial", 14), pad=((0, 0), (10, 10)))],
         [sg.Table(values=[],
-                  headings=["Matrícula", "Nome", "Idade"], 
-                  key="Tabela", 
-                  auto_size_columns= False,
-                  max_col_width=10,
-                  def_col_width=10,
+                  headings=["Matrícula", "Nome", "Idade"],
+                  key="Tabela",
+                  auto_size_columns=False,
+                  col_widths=[10, 20, 10],
                   justification='center',
                   display_row_numbers=True,
-                  starting_row_number=1)],
-        [sg.Button('FECHAR')]
+                  font=("Arial", 14),
+                  row_height=25)],
+        [sg.Button('Voltar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0))), sg.Button('Fechar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0)))]
     ]
-    
-    window = sg.Window("Turma",layout,finalize=True, size=(350,200))
+
+    window = sg.Window("Turma", layout, finalize=True, size=(450, 400), element_justification='center')
 
     linha_tabela = []
-    
+
     for aluno in turma.alunos:
         linha_tabela.append([aluno.matricula, aluno.nome, aluno.idade])
 
-    linha_tabela.sort(key= lambda x: x[1])
+    linha_tabela.sort(key=lambda x: x[1])
 
     window['Tabela'].update(values=linha_tabela)
-    
 
     while True:
         event, values = window.read()
-        if event == sg.WIN_CLOSED or event == "FECHAR" : 
+        if event == sg.WINDOW_CLOSED or event == "Fechar":
             break
+
+        elif event == 'Voltar':
+            window.close()
+            return  # Retorna para a tela anterior
+
     window.close()
 
 def tela_materia(materia):
@@ -100,30 +111,35 @@ def tela_materia(materia):
 
     dados_arvore.insert("", "CP", "Provas", [('')])
     for prova, valor in materia.provas.items():
-      dados_arvore.insert("CP", prova, prova, [(valor,)])
+        dados_arvore.insert("CP", prova, prova, [(valor,)])
 
     dados_arvore.insert("", "CT", "Trabalhos", [('')])
     for trabalho, valor in materia.trabalhos.items():
         dados_arvore.insert("CT", trabalho, trabalho, [(valor,)])
 
     layout = [
-        [sg.Text(f"{materia.nome} - Professor: {materia.professor.nome}")],[
-            sg.Tree(data=dados_arvore,
+        [sg.Text(f"{materia.nome} - Professor: {materia.professor.nome}", font=("Arial", 14), pad=((0, 0), (10, 10)))],
+        [sg.Tree(data=dados_arvore,
                  headings=["Valor"],
                  key="Arvore",
                  auto_size_columns=False,
-                 max_col_width=22,
-                 def_col_width=22,
-                 justification='center')],
-        [sg.Button('FECHAR')]
+                 col_widths=[30],
+                 justification='center',
+                 font=("Arial", 14),
+                 row_height=25)],
+        [sg.Button('Voltar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0))), sg.Button('FECHAR', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0)))]
     ]
 
-    window = sg.Window("Materia", layout, finalize=True, size=(350, 250))
+    window = sg.Window("Materia", layout, finalize=True, size=(450, 300), element_justification='center')
 
     while True:
         event, values = window.read()
         if event == sg.WINDOW_CLOSED or event == "FECHAR":
             break
-    window.close()
 
+        elif event == 'Voltar':
+            window.close()
+            return  # Retorna para a tela anterior
+
+    window.close()
 
