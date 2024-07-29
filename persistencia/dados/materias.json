@@ -94,5 +94,12 @@
         "trabalhos": {
             "Trabalho 1": 9.5
         }
+    },
+    {
+        "nome": "Biologia",
+        "professor": "Alvaro",
+        "turma": "7° ano A",
+        "provas": {},
+        "trabalhos": {}
     }
 ]

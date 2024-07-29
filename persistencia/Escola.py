@@ -46,11 +46,22 @@ class Escola:
         else:
             raise ValueError("Número incorreto de argumentos!")
 
-    def add_materia(self, materia):
-        self.Materias[materia.nome] = materia
-        if materia.turma not in self.Turmas:
-            self.Turmas[materia.turma] = Turma(materia.turma)
-        self.Turmas[materia.turma].materias.append(materia)
+    def add_materia(self, *args, **kwargs):
+        if len(args) == 1 and isinstance(args[0], Materia):
+            materia = args[0]
+            self.Materias[materia.nome] = materia
+            if materia.turma not in self.Turmas:
+                self.Turmas[materia.turma] = Turma(materia.turma)
+            self.Turmas[materia.turma].materias.append(materia)
+        elif len(args) == 3:
+            nome, professor, turma = args
+            nova_materia = Materia(nome, professor, turma)
+            self.Materias[nova_materia.nome] = nova_materia
+            if turma not in self.Turmas:
+                self.Turmas[turma] = Turma(turma)
+            self.Turmas[turma].materias.append(nova_materia)
+        else:
+            raise ValueError("Número incorreto de argumentos!")
 
     def get_materias(self):
         return self.Materias.values()

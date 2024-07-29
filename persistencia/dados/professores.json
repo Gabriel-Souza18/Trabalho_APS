@@ -54,5 +54,12 @@
         "email": "helena@example.com",
         "registro": "202258",
         "salario": 3000
+    },
+    {
+        "nome": "Alvaro",
+        "idade": "40",
+        "email": "Alvaro@gmail.com",
+        "registro": "202260",
+        "salario": "2300"
     }
 ]
