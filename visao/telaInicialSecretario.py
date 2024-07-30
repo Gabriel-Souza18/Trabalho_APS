@@ -114,16 +114,51 @@ def tela_adicionar_aluno(escola):
     return 0
 
 
+def tela_detalhes_aluno(aluno):
+    notas = [[prova, nota] for prova, nota in aluno.notas.items()] if aluno.notas else []
+    
+    layout = [
+        [sg.Text(f"Nome: {aluno.nome}", font=fonte_padrao())],
+        [sg.Text(f"Idade: {aluno.idade}", font=fonte_padrao())],
+        [sg.Text(f"Email: {aluno.email}", font=fonte_padrao())],
+        [sg.Text(f"Matrícula: {aluno.matricula}", font=fonte_padrao())],
+        [sg.Text(f"Turma: {aluno.turma}", font=fonte_padrao())],
+        [sg.Text("Notas:", font=fonte_padrao())],
+        [sg.Table(values=notas,
+                  headings=["Prova", "Nota"],
+                  key="TabelaNotas",
+                  auto_size_columns=False,
+                  justification='center',
+                  font=fonte_padrao(),
+                  row_height=25,
+                  col_widths=[20, 10],  # Define a largura das colunas
+                  num_rows=min(5, len(notas))  # Limita o número de linhas visíveis
+                  )],
+        [sg.Button('Fechar', font=fonte_padrao(), size=(10, 1), pad=((5, 5), (10, 0)))]
+    ]
+
+    window = sg.Window(f"Detalhes do Aluno - {aluno.nome}", layout, finalize=True, size=(400, 400), element_justification='left')
+
+    while True:
+        event, values = window.read()
+        if event == sg.WINDOW_CLOSED or event == "Fechar":
+            break
+
+    window.close()
+
+
 def tela_alunos(escola):
     layout = [
         [sg.Text("Lista de Alunos", font=fonte_padrao(), pad=((0, 0), (10, 10)))],
         [sg.Table(values=[[aluno.matricula, aluno.nome, aluno.idade] for aluno in escola.Alunos.values()],
-                     headings=["Matrícula", "Nome", "Idade"],
-                     key="Tabela",
-                     auto_size_columns=False,
-                     justification='center',
-                     font=fonte_padrao(),
-                     row_height=25)],
+                  headings=["Matrícula", "Nome", "Idade"],
+                  key="Tabela",
+                  auto_size_columns=False,
+                  justification='center',
+                  font=fonte_padrao(),
+                  row_height=25,
+                  enable_events=True,
+                  select_mode=sg.TABLE_SELECT_MODE_BROWSE)],
         [sg.Button('Adicionar Aluno', font=fonte_padrao(), size=(15, 1), pad=((5, 5), (10, 0))),
          sg.Button('Remover Aluno', font=fonte_padrao(), size=(15, 1), pad=((5, 5), (10, 0)))],
         [sg.Button('Voltar', font=fonte_padrao(), size=(10, 1), pad=((5, 5), (10, 0))),
@@ -154,6 +189,13 @@ def tela_alunos(escola):
                 aluno_matricula = alunos_list[selected_row[0]].matricula
                 del escola.Alunos[aluno_matricula]
                 window['Tabela'].update(values=[[aluno.matricula, aluno.nome, aluno.idade] for aluno in escola.Alunos.values()])
+
+        elif event == 'Tabela':
+            if len(values['Tabela']) > 0:
+                selected_row = values['Tabela'][0]
+                alunos_list = list(escola.Alunos.values())
+                aluno = alunos_list[selected_row]
+                tela_detalhes_aluno(aluno)
 
     window.close()
     return 0
@@ -192,16 +234,39 @@ def tela_adicionar_professor(escola):
 
 
 
+def tela_detalhes_professor(professor):
+    # Obtém a lista de matérias do professor
+    
+    layout = [
+        [sg.Text(f"Nome: {professor.nome}", font=fonte_padrao())],
+        [sg.Text(f"Idade: {professor.idade}", font=fonte_padrao())],
+        [sg.Text(f"Email: {professor.email}", font=fonte_padrao())],
+        [sg.Text(f"Registro: {professor.registro}", font=fonte_padrao())],
+        [sg.Button('Fechar', font=fonte_padrao(), size=(10, 1), pad=((5, 5), (10, 0)))]
+    ]
+
+    # Ajuste do tamanho da janela
+    window = sg.Window(f"Detalhes do Professor - {professor.nome}", layout, finalize=True, size=(400, 200), element_justification='left')
+
+    while True:
+        event, values = window.read()
+        if event == sg.WINDOW_CLOSED or event == "Fechar":
+            break
+
+    window.close()
+
 def tela_professores(escola):
     layout = [
         [sg.Text("Lista de Professores", font=fonte_padrao(), pad=((0, 0), (10, 10)))],
         [sg.Table(values=[[professor.registro, professor.nome, professor.idade] for professor in escola.Professores.values()],
-                     headings=["Registro", "Nome", "Idade"],
-                     key="Tabela",
-                     auto_size_columns=False,
-                     justification='center',
-                     font=fonte_padrao(),
-                     row_height=25)],
+                  headings=["Registro", "Nome", "Idade"],
+                  key="Tabela",
+                  auto_size_columns=False,
+                  justification='center',
+                  font=fonte_padrao(),
+                  row_height=25,
+                  enable_events=True,
+                  select_mode=sg.TABLE_SELECT_MODE_BROWSE)],
         [sg.Button('Adicionar Professor', font=fonte_padrao(), size=(15, 1), pad=((5, 5), (10, 0))),
          sg.Button('Remover Professor', font=fonte_padrao(), size=(15, 1), pad=((5, 5), (10, 0)))],
         [sg.Button('Voltar', font=fonte_padrao(), size=(10, 1), pad=((5, 5), (10, 0))),
@@ -232,6 +297,13 @@ def tela_professores(escola):
                 professor_registro = professores_list[selected_row[0]].registro
                 del escola.Professores[professor_registro]
                 window['Tabela'].update(values=[[professor.registro, professor.nome, professor.idade] for professor in escola.Professores.values()])
+
+        elif event == 'Tabela':
+            if len(values['Tabela']) > 0:
+                selected_row = values['Tabela'][0]
+                professores_list = list(escola.Professores.values())
+                professor = professores_list[selected_row]
+                tela_detalhes_professor(professor)
 
     window.close()
     return 0
@@ -331,17 +403,48 @@ def tela_adicionar_turma(escola):
     window.close()
     return 0
 
+def tela_detalhes_turma(turma):
+    # Obtém a lista de alunos da turma
+    alunos = [[aluno.matricula, aluno.nome, aluno.idade] for aluno in turma.alunos] if turma.alunos else []
+    
+    layout = [
+        [sg.Text(f"Nome da Turma: {turma.nome_turma}", font=fonte_padrao())],
+        [sg.Text("Alunos:", font=fonte_padrao())],
+        [sg.Table(values=alunos,
+                  headings=["Matrícula", "Nome", "Idade"],
+                  key="TabelaAlunos",
+                  auto_size_columns=False,
+                  justification='center',
+                  font=fonte_padrao(),
+                  row_height=25,
+                  col_widths=[10, 10, 10],  # Define a largura das colunas
+                  num_rows=min(5, len(alunos)) 
+                  )],
+        [sg.Button('Fechar', font=fonte_padrao(), size=(10, 1), pad=((5, 5), (10, 0)))]
+    ]
+
+    # Ajuste do tamanho da janela
+    window = sg.Window(f"Detalhes da Turma - {turma.nome_turma}", layout, finalize=True, size=(400, 300), element_justification='left')
+
+    while True:
+        event, values = window.read()
+        if event == sg.WINDOW_CLOSED or event == "Fechar":
+            break
+
+    window.close()
+
 def tela_turmas(escola):
-    turmas = list(escola.Turmas.values())
     layout = [
         [sg.Text("Lista de Turmas", font=fonte_padrao(), pad=((0, 0), (10, 10)))],
-        [sg.Table(values=[[turma.nome_turma, len(turma.alunos)] for turma in turmas],
-                  headings=["Turma", "Número de Alunos"],
+        [sg.Table(values=[[turma.nome_turma] for turma in escola.Turmas.values()],
+                  headings=["Nome da Turma"],
                   key="Tabela",
                   auto_size_columns=False,
                   justification='center',
                   font=fonte_padrao(),
-                  row_height=25)],
+                  row_height=25,
+                  enable_events=True,
+                  select_mode=sg.TABLE_SELECT_MODE_BROWSE)],
         [sg.Button('Adicionar Turma', font=fonte_padrao(), size=(15, 1), pad=((5, 5), (10, 0))),
          sg.Button('Remover Turma', font=fonte_padrao(), size=(15, 1), pad=((5, 5), (10, 0)))],
         [sg.Button('Voltar', font=fonte_padrao(), size=(10, 1), pad=((5, 5), (10, 0))),
@@ -352,6 +455,7 @@ def tela_turmas(escola):
 
     while True:
         event, values = window.read()
+
         if event == sg.WINDOW_CLOSED or event == "Fechar":
             window.close()
             return 0
@@ -362,16 +466,22 @@ def tela_turmas(escola):
 
         elif event == 'Adicionar Turma':
             if tela_adicionar_turma(escola) == 1:
-                turmas = list(escola.Turmas.values())
-                window['Tabela'].update(values=[[turma.nome_turma, len(turma.alunos)] for turma in turmas])
+                window['Tabela'].update(values=[[turma.nome_turma] for turma in escola.Turmas.values()])
 
         elif event == 'Remover Turma':
             selected_row = values['Tabela']
             if selected_row:
-                turma_nome = turmas[selected_row[0]].nome_turma
-                escola.remove_turma(turma_nome)
-                turmas = list(escola.Turmas.values())
-                window['Tabela'].update(values=[[turma.nome_turma, len(turma.alunos)] for turma in turmas])
+                turmas_list = list(escola.Turmas.values())
+                turma_nome = turmas_list[selected_row[0]].nome_turma
+                del escola.Turmas[turma_nome]
+                window['Tabela'].update(values=[[turma.nome_turma] for turma in escola.Turmas.values()])
+
+        elif event == 'Tabela':
+            if len(values['Tabela']) > 0:
+                selected_row = values['Tabela'][0]
+                turmas_list = list(escola.Turmas.values())
+                turma = turmas_list[selected_row]
+                tela_detalhes_turma(turma)
 
     window.close()
     return 0

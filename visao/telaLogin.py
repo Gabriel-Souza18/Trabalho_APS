@@ -1,6 +1,6 @@
 import PySimpleGUI as sg
 from persistencia.Leitor import Leitor
-from persistencia.Escola import Escola
+from controle.Escola import Escola
 
 from visao.telaInicialAluno import *
 from visao.telaInicialSecretario import *

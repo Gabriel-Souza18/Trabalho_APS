@@ -1,6 +1,7 @@
 from modelo.pessoas import *
 from modelo.escola import *
-from persistencia import Escola, Gravador, Leitor
+from persistencia import Gravador, Leitor
+from controle import Escola
 
 from visao.telaInicialAluno import *
 from visao.telaLogin import *

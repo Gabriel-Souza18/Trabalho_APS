@@ -1,0 +1,67 @@
+[
+    {
+        "registro": "202254",
+        "senha": "100",
+        "tipo": "S"
+    },
+    {
+        "registro": "202202",
+        "senha": "010",
+        "tipo": "A"
+    },
+    {
+        "registro": "202203",
+        "senha": "310",
+        "tipo": "A"
+    },
+    {
+        "registro": "202204",
+        "senha": "230",
+        "tipo": "A"
+    },
+    {
+        "registro": "202205",
+        "senha": "110",
+        "tipo": "A"
+    },
+    {
+        "registro": "202251",
+        "senha": "810",
+        "tipo": "P"
+    },
+    {
+        "registro": "202252",
+        "senha": "720",
+        "tipo": "P"
+    },
+    {
+        "registro": "202253",
+        "senha": "630",
+        "tipo": "P"
+    },
+    {
+        "registro": "202255",
+        "senha": "412",
+        "tipo": "P"
+    },
+    {
+        "registro": "202256",
+        "senha": "562",
+        "tipo": "P"
+    },
+    {
+        "registro": "202257",
+        "senha": "894",
+        "tipo": "P"
+    },
+    {
+        "registro": "202258",
+        "senha": "244",
+        "tipo": "P"
+    },
+    {
+        "registro": "202401",
+        "senha": "365",
+        "tipo": "P"
+    }
+]

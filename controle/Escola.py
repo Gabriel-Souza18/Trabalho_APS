@@ -1,5 +1,9 @@
 from modelo.pessoas import Secretario, Professor, Aluno
 from modelo.escola import Materia, Turma
+from persistencia import Gravador
+
+import random
+import string
 
 class Escola:
     def __init__(self, nome):
@@ -45,6 +49,7 @@ class Escola:
             self.Turmas[turma].alunos.append(novo_aluno)
         else:
             raise ValueError("Número incorreto de argumentos!")
+
 
     def add_materia(self, *args, **kwargs):
         if len(args) == 1 and isinstance(args[0], Materia):
@@ -92,6 +97,11 @@ class Escola:
             if materia.nome == nome_materia:
                 return materia
         return None
+    
+    def gerar_senha(self, tamanho=3):
+        caracteres = string.ascii_letters + string.digits
+        senha = ''.join(random.choice(caracteres) for _ in range(tamanho))
+        return senha
 
     def imprimir_tudo(self):
         print("Secretarios:")

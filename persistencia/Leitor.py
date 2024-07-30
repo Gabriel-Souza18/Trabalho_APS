@@ -1,5 +1,5 @@
 import json
-from persistencia import Escola
+from controle import Escola
 from modelo.escola import Materia
 
 
