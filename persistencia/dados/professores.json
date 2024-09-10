@@ -61,5 +61,26 @@
         "email": "Alvaro@gmail.com",
         "registro": "202401",
         "salario": "2600"
+    },
+    {
+        "nome": "Dr. Carlos",
+        "idade": 45,
+        "email": "carlos@example.com",
+        "registro": "p202201",
+        "salario": 5000.0
+    },
+    {
+        "nome": "Gabriel",
+        "idade": "gabriel@example.com",
+        "email": "1234",
+        "registro": 3000,
+        "salario": 0
+    },
+    {
+        "nome": "Gustavo",
+        "idade": "gustavo@example.com",
+        "email": "5678",
+        "registro": 3200,
+        "salario": 0
     }
 ]

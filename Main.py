@@ -1,34 +1,17 @@
-from modelo.pessoas import *
-from modelo.escola import *
-from persistencia import Gravador, Leitor
-from controle import Escola
-
-from visao.telaInicialAluno import *
-from visao.telaLogin import *
+from controle.ControladorLogin import ControladorLogin
+from persistencia.TurmaDAO import TurmaDAO
+from persistencia.AlunoDAO import AlunoDAO  # Supondo que exista um AlunoDAO
+from persistencia.MateriaDAO import MateriaDAO  # Supondo que exista um MateriaDAO
+from persistencia.ProfessorDAO import ProfessorDAO
+from modelo.escola.Escola import Escola
 
 def main():
-    escola = Escola("Escola Estadual")
+    # Inicializa a escola
+    escola = Escola("Escola Estadual")  
 
-    carregarDados(escola)
-
-    telaLogin(escola) # Funcionando!
-    salvarDados(escola)
-
-
-def carregarDados(escola):
-    leitor = Leitor(escola)
-    leitor.lista_professores()
-    leitor.lista_secretarios()
-    leitor.lista_alunos()
-    leitor.lista_materias()
-
-
-def salvarDados(escola):
-    gravador = Gravador(escola)
-    gravador.gravar_secretarios()
-    gravador.gravar_alunos()
-    gravador.gravar_professores()
-    gravador.gravar_materias()
+    # Inicializa o controlador de login
+    controlador_login = ControladorLogin()
+    controlador_login.iniciar_tela_login()
 
 if __name__ == "__main__":
     main()

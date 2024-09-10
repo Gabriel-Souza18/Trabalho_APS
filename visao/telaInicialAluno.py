@@ -1,78 +1,55 @@
 import PySimpleGUI as sg
 
-def TelaInicial(aluno, turma, escola):
+def layout_tela_inicial_aluno(aluno, turma):
     sg.theme('DarkBlue12')
 
     layout = [
-        [sg.Text('Nome: ' + aluno.nome, font=("Arial", 14)), sg.Text('', size=(15, 1)), sg.Text(f'Matricula: ' + str(aluno.matricula), font=("Arial", 14))],
-        [sg.Text(aluno.email, font=("Arial", 14))],
+        [sg.Text(f'Nome: {aluno.nome}', font=("Arial", 14)), sg.Text('', size=(15, 1)), sg.Text(f'Matrícula: {aluno.matricula}', font=("Arial", 14))],
+        [sg.Text(f'Email: {aluno.email}', font=("Arial", 14))],
         [sg.Button("Ver Notas", key="NOTAS", size=(15, 1), font=("Arial", 14)), sg.Button("Ver Turma", key="TURMA", size=(15, 1), font=("Arial", 14))]
     ]
-    window = sg.Window("Aluno", layout, size=(450, 150), element_justification='center', finalize=True)
+    return sg.Window("Tela Inicial do Aluno", layout, size=(450, 150), element_justification='center', finalize=True)
 
-    while True:
-        event, values = window.read()
-        if event == sg.WINDOW_CLOSED:
-            break
+def layout_tela_notas(aluno, materia_dao):
+    linhas_tabela = []
+    for materia_nome, notas in aluno.notas.items():
+        materia = materia_dao.buscar_materia_por_nome(materia_nome)
+        if materia is None:
+            continue  # Se a matéria não for encontrada, pule para a próxima
 
-        if event == "NOTAS":
-            window.close()
-            tela_notas(aluno, turma, escola)
+        nota_total = sum(notas.get('provas', {}).values()) + sum(notas.get('trabalhos', {}).values())
+        nota_maxima = sum(materia.provas.values()) + sum(materia.trabalhos.values())
+        percentual = (nota_total / nota_maxima * 100) if nota_maxima > 0 else 0
+        linhas_tabela.append([materia_nome, f"{nota_total:.2f}", f"{nota_maxima:.2f}", f"{percentual:.2f}%"])
 
-        if event == "TURMA":
-            window.close()
-            tela_turma(turma)
-    window.close()
-
-def tela_notas(aluno, turma, escola):
+    linhas_tabela.sort(key=lambda x: x[0])
+    
     layout = [
         [sg.Text("Clique na matéria para ver detalhes", font=("Arial", 14), pad=((0, 0), (10, 10)))],
-        [sg.Table(values=[],
-                  headings=["Matéria", "Nota"],
+        [sg.Table(values=linhas_tabela,
+                  headings=["Matéria", "Nota Total", "Nota Máxima", "Percentual"],
                   key="Tabela",
                   auto_size_columns=False,
-                  col_widths=[20, 10],
+                  col_widths=[20, 15, 15, 15],
                   justification='center',
                   enable_events=True,
                   font=("Arial", 14),
                   row_height=25)],
         [sg.Button('Voltar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0))), sg.Button('Fechar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0)))]
     ]
+    return sg.Window('Notas', layout, finalize=True, size=(700, 400), element_justification='center')
 
-    window = sg.Window('Notas', layout, finalize=True, size=(450, 400), element_justification='center')
-
+def layout_tela_turma(turma):
+     
     linhas_tabela = []
+    for aluno in turma.alunos:
+        linhas_tabela.append([aluno.matricula, aluno.nome, aluno.idade])
 
-    for materia, nota in aluno.notas.items():
-        linhas_tabela.append([materia, nota])
-
-    linhas_tabela.sort(key=lambda x: x[0])
-
-    window['Tabela'].update(values=linhas_tabela)
-
-    while True:
-        event, values = window.read()
-        if event == sg.WINDOW_CLOSED or event == 'Fechar':
-            break
-
-        elif event == 'Voltar':
-            window.close()
-            return  # Retorna para a tela anterior
-
-        elif event == 'Tabela':
-            if values['Tabela']:
-                linha_clicada = values['Tabela'][0]  # Obtém o índice da linha clicada
-
-                nome_materia = linhas_tabela[linha_clicada][0]
-                materia = escola.get_materia_por_nome(nome_materia)
-                tela_materia(materia)
-
-    window.close()
-
-def tela_turma(turma):
+    linhas_tabela.sort(key=lambda x: x[1])
+    
     layout = [
         [sg.Text(f"Turma: {turma.nome_turma}", font=("Arial", 14), pad=((0, 0), (10, 10)))],
-        [sg.Table(values=[],
+        [sg.Table(values=linhas_tabela,
                   headings=["Matrícula", "Nome", "Idade"],
                   key="Tabela",
                   auto_size_columns=False,
@@ -83,63 +60,31 @@ def tela_turma(turma):
                   row_height=25)],
         [sg.Button('Voltar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0))), sg.Button('Fechar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0)))]
     ]
+    return sg.Window("Turma", layout, finalize=True, size=(450, 400), element_justification='center')
 
-    window = sg.Window("Turma", layout, finalize=True, size=(450, 400), element_justification='center')
-
-    linha_tabela = []
-
-    for aluno in turma.alunos:
-        linha_tabela.append([aluno.matricula, aluno.nome, aluno.idade])
-
-    linha_tabela.sort(key=lambda x: x[1])
-
-    window['Tabela'].update(values=linha_tabela)
-
-    while True:
-        event, values = window.read()
-        if event == sg.WINDOW_CLOSED or event == "Fechar":
-            break
-
-        elif event == 'Voltar':
-            window.close()
-            return  # Retorna para a tela anterior
-
-    window.close()
-
-def tela_materia(materia):
+def layout_tela_materia(materia, notas_aluno):
     dados_arvore = sg.TreeData()
 
     dados_arvore.insert("", "CP", "Provas", [('')])
     for prova, valor in materia.provas.items():
-        dados_arvore.insert("CP", prova, prova, [(valor,)])
+        nota_aluno = notas_aluno.get('provas', {}).get(prova, '')
+        dados_arvore.insert("CP", prova, prova, [f"{nota_aluno} / {valor}"])
 
     dados_arvore.insert("", "CT", "Trabalhos", [('')])
     for trabalho, valor in materia.trabalhos.items():
-        dados_arvore.insert("CT", trabalho, trabalho, [(valor,)])
+        nota_aluno = notas_aluno.get('trabalhos', {}).get(trabalho, '')
+        dados_arvore.insert("CT", trabalho, trabalho, [f"{nota_aluno} / {valor}"])
 
     layout = [
         [sg.Text(f"{materia.nome} - Professor: {materia.professor.nome}", font=("Arial", 14), pad=((0, 0), (10, 10)))],
         [sg.Tree(data=dados_arvore,
-                 headings=["Valor"],
+                 headings=["Valor", "Nota do Aluno"],
                  key="Arvore",
                  auto_size_columns=False,
-                 col_widths=[30],
+                 col_widths=[30, 20],
                  justification='center',
                  font=("Arial", 14),
                  row_height=25)],
         [sg.Button('Voltar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0))), sg.Button('FECHAR', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0)))]
     ]
-
-    window = sg.Window("Materia", layout, finalize=True, size=(450, 300), element_justification='center')
-
-    while True:
-        event, values = window.read()
-        if event == sg.WINDOW_CLOSED or event == "FECHAR":
-            break
-
-        elif event == 'Voltar':
-            window.close()
-            return  # Retorna para a tela anterior
-
-    window.close()
-
+    return sg.Window("Matéria", layout, finalize=True, size=(500, 300), element_justification='center')
