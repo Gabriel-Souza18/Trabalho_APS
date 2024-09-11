@@ -1,33 +1,19 @@
 import json
-from modelo.pessoas.Aluno import Aluno  # Supondo que o modelo do Aluno está nesse caminho
 
-CAMINHO = "persistencia/dados/"
+from persistencia.BaseDAO import BaseDAO
+from modelo.pessoas.Aluno import Aluno
 
-class AlunoDAO:
+class AlunoDAO(BaseDAO):
     def __init__(self):
-        self.alunos = {}  # Dicionário para armazenar alunos com matrícula como chave
-        self.carregar_alunos()  # Carrega os alunos no início
-
-    def salvar_alunos(self):
-        alunos_data = [
-            {
-                "nome": aluno.nome,
-                "idade": aluno.idade,
-                "email": aluno.email,
-                "matricula": aluno.matricula,
-                "turma": aluno.turma,
-                "notas": aluno.notas
-            }
-            for aluno in self.alunos.values()
-        ]
-        with open(CAMINHO + "alunos.json", "w", encoding="utf-8") as arquivo:
-            json.dump(alunos_data, arquivo, indent=4, ensure_ascii=False)
+        super().__init__("alunos.json")
+        self.alunos = self.carregar_alunos()
 
     def carregar_alunos(self):
+        alunos = {}
         try:
-            with open(CAMINHO + "alunos.json", 'r', encoding='utf-8') as arquivo:
-                alunos_data = json.load(arquivo)
-                for dados in alunos_data:
+            with open(self.file_path, 'r', encoding='utf-8') as arquivo:
+                self.data = json.load(arquivo)
+                for dados in self.data:
                     aluno = Aluno(
                         dados['nome'],
                         dados['idade'],
@@ -36,18 +22,27 @@ class AlunoDAO:
                         dados['turma'],
                         dados['notas']
                     )
-                    self.alunos[aluno.matricula] = aluno
+                    alunos[aluno.matricula] = aluno
         except FileNotFoundError:
-            pass
+            self.data = []
+        except json.JSONDecodeError:
+            print("Erro ao carregar alunos: arquivo JSON está malformado")
+            self.data = []
+        return alunos
 
     def adicionar_aluno(self, aluno: Aluno):
-        self.alunos[aluno.matricula] = aluno
-        self.salvar_alunos()
+        self.add_item(aluno.matricula, {
+            "nome": aluno.nome,
+            "idade": aluno.idade,
+            "email": aluno.email,
+            "turma": aluno.turma,
+            "notas": aluno.notas
+        })
+        self.alunos = self.carregar_alunos()
 
     def remover_aluno(self, matricula):
-        if matricula in self.alunos:
-            del self.alunos[matricula]
-            self.salvar_alunos()
+        self.remove_item(matricula)
+        self.alunos = self.carregar_alunos()
 
     def buscar_aluno(self, matricula):
         return self.alunos.get(matricula)

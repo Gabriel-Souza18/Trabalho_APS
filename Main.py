@@ -5,6 +5,7 @@ from persistencia.MateriaDAO import MateriaDAO  # Supondo que exista um MateriaD
 from persistencia.ProfessorDAO import ProfessorDAO
 from modelo.escola.Escola import Escola
 
+
 def main():
     # Inicializa a escola
     escola = Escola("Escola Estadual")  

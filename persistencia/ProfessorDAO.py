@@ -1,9 +1,10 @@
 import json
 from modelo.pessoas.Professor import Professor
+from persistencia.BaseDAO import BaseDAO
 
 CAMINHO = "persistencia/dados/"
 
-class ProfessorDAO:
+class ProfessorDAO(BaseDAO):
     def __init__(self):
         self.professores = {}  # Dicionário para armazenar professores com o registro como chave
         self.carregar_professores()  # Carrega os professores no início

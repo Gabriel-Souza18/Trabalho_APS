@@ -14,6 +14,7 @@ from visao.telaInicialProfessor import TelaInicialProfessor
 
 from controle.ControladorAluno import ControladorTelaInicialAluno
 
+
 class ControladorLogin:
     def __init__(self):
         # Inicializa os DAOs básicos
@@ -28,6 +29,8 @@ class ControladorLogin:
         self.turma_dao.materia_dao = self.materia_dao
         self.materia_dao.turma_dao = self.turma_dao
 
+        print(self.aluno_dao.data)
+
     def iniciar_tela_login(self):
         window = tela_login_layout()
 
@@ -39,16 +42,17 @@ class ControladorLogin:
             if event == 'Entrar':
                 registro = values['REGISTRO']
                 senha = values['SENHA']
-                
+
                 tipo_usuario = self.registro_dao.get_tipo(registro)
-                
+
                 if tipo_usuario and self.registro_dao.testar_senha(registro, senha):
                     if tipo_usuario == 'A':
                         aluno = self.aluno_dao.buscar_aluno(registro)
                         if aluno:
                             turma = self.turma_dao.buscar_turma(aluno.turma)
                             if turma:
-                                controlador_aluno = ControladorTelaInicialAluno(self.aluno_dao, self.turma_dao, self.materia_dao)
+                                controlador_aluno = ControladorTelaInicialAluno(self.aluno_dao, self.turma_dao,
+                                                                                self.materia_dao)
                                 controlador_aluno.iniciar_tela_inicial_aluno(aluno, turma)
                             else:
                                 sg.popup('Turma não encontrada!', title="Erro", font=("Arial", 14))
