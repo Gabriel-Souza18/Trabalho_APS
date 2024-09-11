@@ -1,14 +1,18 @@
 import PySimpleGUI as sg
 
+
 def layout_tela_inicial_aluno(aluno, turma):
     sg.theme('DarkBlue12')
 
     layout = [
-        [sg.Text(f'Nome: {aluno.nome}', font=("Arial", 14)), sg.Text('', size=(15, 1)), sg.Text(f'Matrícula: {aluno.matricula}', font=("Arial", 14))],
+        [sg.Text(f'Nome: {aluno.nome}', font=("Arial", 14)), sg.Text('', size=(15, 1)),
+         sg.Text(f'Matrícula: {aluno.matricula}', font=("Arial", 14))],
         [sg.Text(f'Email: {aluno.email}', font=("Arial", 14))],
-        [sg.Button("Ver Notas", key="NOTAS", size=(15, 1), font=("Arial", 14)), sg.Button("Ver Turma", key="TURMA", size=(15, 1), font=("Arial", 14))]
+        [sg.Button("Ver Notas", key="NOTAS", size=(15, 1), font=("Arial", 14)),
+         sg.Button("Ver Turma", key="TURMA", size=(15, 1), font=("Arial", 14))]
     ]
     return sg.Window("Tela Inicial do Aluno", layout, size=(450, 150), element_justification='center', finalize=True)
+
 
 def layout_tela_notas(aluno, materia_dao):
     linhas_tabela = []
@@ -23,7 +27,7 @@ def layout_tela_notas(aluno, materia_dao):
         linhas_tabela.append([materia_nome, f"{nota_total:.2f}", f"{nota_maxima:.2f}", f"{percentual:.2f}%"])
 
     linhas_tabela.sort(key=lambda x: x[0])
-    
+
     layout = [
         [sg.Text("Clique na matéria para ver detalhes", font=("Arial", 14), pad=((0, 0), (10, 10)))],
         [sg.Table(values=linhas_tabela,
@@ -35,18 +39,19 @@ def layout_tela_notas(aluno, materia_dao):
                   enable_events=True,
                   font=("Arial", 14),
                   row_height=25)],
-        [sg.Button('Voltar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0))), sg.Button('Fechar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0)))]
+        [sg.Button('Voltar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0))),
+         sg.Button('Fechar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0)))]
     ]
     return sg.Window('Notas', layout, finalize=True, size=(700, 400), element_justification='center')
 
+
 def layout_tela_turma(turma):
-     
     linhas_tabela = []
     for aluno in turma.alunos:
         linhas_tabela.append([aluno.matricula, aluno.nome, aluno.idade])
 
     linhas_tabela.sort(key=lambda x: x[1])
-    
+
     layout = [
         [sg.Text(f"Turma: {turma.nome_turma}", font=("Arial", 14), pad=((0, 0), (10, 10)))],
         [sg.Table(values=linhas_tabela,
@@ -58,9 +63,11 @@ def layout_tela_turma(turma):
                   display_row_numbers=True,
                   font=("Arial", 14),
                   row_height=25)],
-        [sg.Button('Voltar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0))), sg.Button('Fechar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0)))]
+        [sg.Button('Voltar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0))),
+         sg.Button('Fechar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0)))]
     ]
     return sg.Window("Turma", layout, finalize=True, size=(450, 400), element_justification='center')
+
 
 def layout_tela_materia(materia, notas_aluno):
     dados_arvore = sg.TreeData()
@@ -85,6 +92,7 @@ def layout_tela_materia(materia, notas_aluno):
                  justification='center',
                  font=("Arial", 14),
                  row_height=25)],
-        [sg.Button('Voltar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0))), sg.Button('FECHAR', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0)))]
+        [sg.Button('Voltar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0))),
+         sg.Button('FECHAR', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0)))]
     ]
     return sg.Window("Matéria", layout, finalize=True, size=(500, 300), element_justification='center')

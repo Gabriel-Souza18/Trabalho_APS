@@ -1,34 +1,18 @@
 import json
 from modelo.pessoas.Secretario import Secretario
+from persistencia.BaseDAO import BaseDAO
 
-CAMINHO = "persistencia/dados/"
-
-class SecretarioDAO:
+class SecretarioDAO(BaseDAO):
     def __init__(self):
-        self.secretarios = {}  # Dicionário para armazenar secretários com o registro como chave
-        self.carregar_secretarios()  # Carrega os secretários no início
-
-    def salvar_secretarios(self):
-        """Salva todos os secretários no arquivo JSON."""
-        secretarios_data = [
-            {
-                "nome": secretario.nome,
-                "idade": secretario.idade,
-                "email": secretario.email,
-                "registro": secretario.registro,
-                "salario": secretario.salario
-            }
-            for secretario in self.secretarios.values()
-        ]
-        with open(CAMINHO + "secretarios.json", "w", encoding="utf-8") as arquivo:
-            json.dump(secretarios_data, arquivo, indent=4, ensure_ascii=False)
+        super().__init__("secretarios.json")
+        self.secretarios = self.carregar_secretarios()
 
     def carregar_secretarios(self):
-        """Carrega os secretários do arquivo JSON e os armazena no dicionário."""
+        secretarios = {}
         try:
-            with open(CAMINHO + "secretarios.json", 'r', encoding='utf-8') as arquivo:
-                secretarios_data = json.load(arquivo)
-                for dados in secretarios_data:
+            with open(self.file_path, 'r', encoding='utf-8') as arquivo:
+                self.data = json.load(arquivo)
+                for dados in self.data:
                     secretario = Secretario(
                         dados['nome'],
                         dados['idade'],
@@ -36,28 +20,32 @@ class SecretarioDAO:
                         dados['registro'],
                         dados['salario']
                     )
-                    self.secretarios[secretario.registro] = secretario
+                    secretarios[secretario.registro] = secretario
         except FileNotFoundError:
-            # Caso o arquivo não exista, apenas ignore
-            pass
+            self.data = []
+        except json.JSONDecodeError:
+            print("Erro ao carregar secretarios: arquivo JSON está malformado")
+            self.data = []
+        return secretarios
 
     def adicionar_secretario(self, secretario: Secretario):
-        """Adiciona um secretário ao dicionário e salva as alterações."""
-        self.secretarios[secretario.registro] = secretario
-        self.salvar_secretarios()
+        self.add_item(secretario.registro, {
+            "nome": secretario.nome,
+            "idade": secretario.idade,
+            "email": secretario.email,
+            "registro": secretario.registro,
+            "salario": secretario.salario
+        })
+        self.secretarios = self.carregar_secretarios()
 
     def remover_secretario(self, registro):
-        """Remove um secretário pelo registro e salva as alterações."""
-        if registro in self.secretarios:
-            del self.secretarios[registro]
-            self.salvar_secretarios()
+        self.remove_item(registro)
+        self.secretarios = self.carregar_secretarios()
 
     def buscar_secretario(self, registro):
-        """Busca e retorna um secretário pelo registro."""
         return self.secretarios.get(registro)
 
     def buscar_secretario_por_nome(self, nome):
-        """Busca e retorna um secretário pelo nome."""
         for secretario in self.secretarios.values():
             if secretario.nome == nome:
                 return secretario

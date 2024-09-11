@@ -1,11 +1,19 @@
 import json
 
-
 class BaseDAO:
+    _instances = {}
+
+    def __new__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super().__new__(cls)
+        return cls._instances[cls]
+
     def __init__(self, file_name):
-        self.file_path = "persistencia/dados/" + file_name
-        self.data = {}
-        self.load_data()
+        if not hasattr(self, 'initialized'):
+            self.file_path = "persistencia/dados/" + file_name
+            self.data = {}
+            self.load_data()
+            self.initialized = True
 
     def salvar_data(self):
         with open(self.file_path, "w", encoding="utf-8") as file:

@@ -3,6 +3,7 @@ import json
 from persistencia.BaseDAO import BaseDAO
 from modelo.escola.Turma import Turma
 
+
 class TurmaDAO(BaseDAO):
     def __init__(self, aluno_dao):
         super().__init__("turmas.json")

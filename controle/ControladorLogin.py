@@ -29,7 +29,6 @@ class ControladorLogin:
         self.turma_dao.materia_dao = self.materia_dao
         self.materia_dao.turma_dao = self.turma_dao
 
-        print(self.aluno_dao.data)
 
     def iniciar_tela_login(self):
         window = tela_login_layout()
