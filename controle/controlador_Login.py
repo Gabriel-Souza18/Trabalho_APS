@@ -80,7 +80,7 @@ class Controlador_Login:
 
         controlador_aluno = ControladorAluno(self.aluno_dao, self.turma_dao, self.materia_dao)
         tela_aluno = TelaAluno(controlador_aluno)
-        tela_aluno.iniciar_tela_aluno(aluno, turma)
+        tela_aluno.tela_aluno(aluno, turma)
 
     def iniciar_tela_professor(self, registro):
         """Inicia a tela inicial para o professor."""
@@ -91,7 +91,7 @@ class Controlador_Login:
 
         controlador_professor = ControladorProfessor(self.professor_dao, self.aluno_dao, self.turma_dao, self.materia_dao)
         tela_professor = TelaProfessor(controlador_professor)
-        tela_professor.iniciar_tela_professor(professor)
+        tela_professor.tela_professor(professor)
 
     def iniciar_tela_secretario(self, registro):
         """Inicia a tela inicial para o secretário."""
@@ -102,4 +102,4 @@ class Controlador_Login:
 
         controlador_secretatio = ControladorSecretario(self.secretario_dao, self.aluno_dao, self.turma_dao, self.materia_dao, self.professor_dao, self.registro_dao)
         tela_secretario = TelaSecretario(controlador_secretatio)
-        tela_secretario.iniciar_tela_inicial(secretario)
+        tela_secretario.tela_inicial(secretario)

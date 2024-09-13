@@ -12,7 +12,11 @@ class ControladorAluno:
 
     def obter_alunos_turma(self, turma):
         # Busca os alunos de uma turma
-        alunos = [self.aluno_dao.buscar_aluno(matricula) for matricula in turma.alunos]
+        alunos = []
+
+        for aluno in turma.alunos:
+            alunos.append(aluno)
+        
         return alunos
 
     def obter_notas_materia(self, aluno, materia):

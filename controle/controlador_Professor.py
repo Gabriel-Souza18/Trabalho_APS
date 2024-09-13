@@ -36,13 +36,26 @@ class ControladorProfessor:
         return lista_materias
 
 
-    def atribuir_nota(self, aluno, materia_nome, nota):
-        # Atribui uma nota ao aluno para uma matéria específica
+    def atribuir_nota_aluno(self, aluno, materia_nome, nome_atividade, nota):
+        # Encontra a matéria
         materia = self.materia_dao.buscar_materia(materia_nome)
         if materia:
-            if aluno.matricula not in materia.notas:
-                materia.notas[aluno.matricula] = {}
-            materia.notas[aluno.matricula][materia_nome] = nota
-            self.materia_dao.salvar_materias()  # Salvar alterações no JSON
+            # Verifica se a matéria já possui uma seção para o aluno
+            if materia_nome not in aluno.notas:
+                aluno.notas[materia_nome] = {'provas': {}, 'trabalhos': {}}
+                
+            # Atribui a nota conforme o tipo de atividade
+            if nome_atividade in materia.provas:
+                aluno.notas[materia_nome]['provas'][nome_atividade] = nota
+            elif nome_atividade in materia.trabalhos:
+                aluno.notas[materia_nome]['trabalhos'][nome_atividade] = nota
+            
+            # Salva as alterações
+            self.aluno_dao.salvar_dados()
+            self.materia_dao.salvar_dados()
         else:
             print(f"Matéria {materia_nome} não encontrada.")
+
+    def atribuir_atividade_para_todos_alunos(self, materia_nome, tipo_atividade, nome_atividade, valor):
+        self.materia_dao.adicionar_avaliacao(materia_nome, tipo_atividade, nome_atividade, valor)
+   

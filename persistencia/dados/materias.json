@@ -1,5 +1,5 @@
-[
-    {
+{
+    "Geografia": {
         "nome": "Geografia",
         "professor": "Gabriel",
         "turma": "7° ano A",
@@ -8,10 +8,11 @@
             "Prova 2": 7.0
         },
         "trabalhos": {
-            "Trabalho 1": 9.0
+            "Trabalho 1": 9.0,
+            "Trabalho 2": 10.0
         }
     },
-    {
+    "Português": {
         "nome": "Português",
         "professor": "Gustavo",
         "turma": "7° ano B",
@@ -23,7 +24,7 @@
             "Trabalho 1": 8.5
         }
     },
-    {
+    "Matemática": {
         "nome": "Matemática",
         "professor": "Carlos",
         "turma": "7° ano B",
@@ -35,7 +36,7 @@
             "Trabalho 1": 9.5
         }
     },
-    {
+    "Ciências": {
         "nome": "Ciências",
         "professor": "Alice",
         "turma": "7° ano B",
@@ -47,7 +48,7 @@
             "Trabalho 1": 8.0
         }
     },
-    {
+    "História": {
         "nome": "História",
         "professor": "Daniela",
         "turma": "7° ano A",
@@ -59,7 +60,7 @@
             "Trabalho 1": 8.0
         }
     },
-    {
+    "Inglês": {
         "nome": "Inglês",
         "professor": "Fernando",
         "turma": "7° ano A",
@@ -71,7 +72,7 @@
             "Trabalho 1": 9.0
         }
     },
-    {
+    "Educação Física": {
         "nome": "Educação Física",
         "professor": "Mariana",
         "turma": "7° ano B",
@@ -83,7 +84,7 @@
             "Trabalho 1": 10.0
         }
     },
-    {
+    "Artes": {
         "nome": "Artes",
         "professor": "Helena",
         "turma": "7° ano B",
@@ -95,11 +96,11 @@
             "Trabalho 1": 9.5
         }
     },
-    {
+    "Biologia": {
         "nome": "Biologia",
         "professor": "Alvaro",
         "turma": "7° ano A",
         "provas": {},
         "trabalhos": {}
     }
-]
+}

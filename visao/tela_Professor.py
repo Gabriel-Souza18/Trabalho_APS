@@ -4,7 +4,7 @@ class TelaProfessor:
     def __init__(self, controlador):
         self.controlador = controlador
 
-    def layout_tela_professor(self, professor):
+    def tela_professor(self, professor):
         sg.theme('DarkBlue12')
         layout = [
             [sg.Text(f'Nome: {professor.nome}', font=("Arial", 14)),
@@ -14,10 +14,8 @@ class TelaProfessor:
             [sg.Button("Ver Matérias", key="MATERIAS", size=(15, 1), font=("Arial", 14)),
              sg.Button("Ver Turmas", key="TURMAS", size=(15, 1), font=("Arial", 14))]
         ]
-        return sg.Window("Tela Inicial do Professor", layout, size=(450, 150), element_justification='center', finalize=True)
+        window =  sg.Window("Tela Inicial do Professor", layout, size=(450, 150), element_justification='center', finalize=True)
 
-    def iniciar_tela_professor(self, professor):
-        window = self.layout_tela_professor(professor)
 
         while True:
             event, values = window.read()
@@ -25,14 +23,16 @@ class TelaProfessor:
                 break
 
             if event == 'MATERIAS':
-                self.iniciar_tela_materias(professor)
+                lista_materias = self.controlador.obter_materias(professor)
+                self.tela_materias(professor, lista_materias)
 
             elif event == 'TURMAS':
-                self.iniciar_tela_turmas(professor)
+                turmas = self.controlador.obter_turmas_professor(professor)
+                self.tela_turmas(professor, turmas)
 
         window.close()
 
-    def layout_tela_materias(self, professor, lista_materias):
+    def tela_materias(self, professor, lista_materias):
         linhas_tabela = []
         for materia in lista_materias:
             if not hasattr(materia, 'provas') or not hasattr(materia, 'trabalhos'):
@@ -54,11 +54,8 @@ class TelaProfessor:
             [sg.Button('Voltar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0))),
              sg.Button('Fechar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0)))]
         ]
-        return sg.Window('Matérias', layout, finalize=True, size=(400, 400), element_justification='center')
-
-    def iniciar_tela_materias(self, professor):
-        lista_materias = self.controlador.obter_materias(professor)
-        window = self.layout_tela_materias(professor, lista_materias)
+        
+        window = sg.Window('Matérias', layout, finalize=True, size=(400, 400), element_justification='center')
 
         while True:
             event, values = window.read()
@@ -69,11 +66,11 @@ class TelaProfessor:
                 linha_clicada = values['Tabela'][0] if values['Tabela'] else None
                 if linha_clicada is not None:
                     materia = lista_materias[linha_clicada]
-                    self.iniciar_tela_materia(materia, professor)
+                    self.tela_materia(materia, professor)
 
         window.close()
 
-    def layout_tela_turmas(self, professor, turmas):
+    def tela_turmas(self, professor, turmas):
         linhas_tabela = [[turma.nome_turma] for turma in turmas]
         linhas_tabela.sort(key=lambda x: x[0])
 
@@ -92,11 +89,8 @@ class TelaProfessor:
             [sg.Button('Voltar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0))),
              sg.Button('Fechar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0)))]
         ]
-        return sg.Window("Turmas", layout, finalize=True, size=(400, 400), element_justification='center')
-
-    def iniciar_tela_turmas(self, professor):
-        turmas = self.controlador.obter_turmas_professor(professor)
-        window = self.layout_tela_turmas(professor, turmas)
+        
+        window = sg.Window("Turmas", layout, finalize=True, size=(400, 400), element_justification='center')
 
         while True:
             event, values = window.read()
@@ -107,7 +101,7 @@ class TelaProfessor:
                 linha_clicada = values['Tabela'][0] if values['Tabela'] else None
                 if linha_clicada is not None:
                     turma = turmas[linha_clicada]
-                    self.iniciar_tela_alunos(turma)
+                    self.tela_alunos(turma)
 
             elif event == 'Voltar':
                 window.close()
@@ -115,7 +109,7 @@ class TelaProfessor:
 
         window.close()
 
-    def layout_tela_materia(self, materia, professor):
+    def tela_materia(self, materia, professor):
         dados_arvore = sg.TreeData()
 
         dados_arvore.insert("", "CP", "Provas", [('')])
@@ -137,14 +131,13 @@ class TelaProfessor:
                      font=("Arial", 14),
                      row_height=25)],
             [sg.Button('Voltar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0))),
-             sg.Button('Fechar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0))),
-             sg.Button('Adicionar Nota', key='ADICIONAR_NOTA', font=("Arial", 14), size=(15, 1), pad=((5, 5), (10, 0))),
+             sg.Button('Fechar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0)))],
+             [sg.Button('Adicionar Nota', key='ADICIONAR_NOTA', font=("Arial", 14), size=(15, 1), pad=((5, 5), (10, 0))),
              sg.Button('Ver Alunos', key='VER_ALUNOS', font=("Arial", 14), size=(15, 1), pad=((5, 5), (10, 0)))]
         ]
-        return sg.Window("Matéria", layout, finalize=True, size=(500, 400), element_justification='center')
 
-    def iniciar_tela_materia(self, materia, professor):
-        window = self.layout_tela_materia(materia, professor)
+        window = sg.Window("Matéria", layout, finalize=True, size=(500, 450), element_justification='center')
+
 
         while True:
             event, values = window.read()
@@ -152,26 +145,24 @@ class TelaProfessor:
                 break
 
             elif event == 'ADICIONAR_NOTA':
-                self.iniciar_tela_adicionar_nota(materia)
+                self.tela_adicionar_nota(materia)
 
             elif event == 'VER_ALUNOS':
-                self.iniciar_tela_alunos(materia)
+                self.tela_alunos(materia)
 
         window.close()
 
-    def layout_tela_adicionar_nota(self, materia):
+    def tela_adicionar_nota(self, materia):
         layout = [
             [sg.Text('Adicionar Nota ou Prova', font=("Arial", 14))],
             [sg.Text('Tipo:', font=("Arial", 12)), sg.Combo(['Prova', 'Trabalho'], key='Tipo', size=(20, 1))],
             [sg.Text('Nome:', font=("Arial", 12)), sg.InputText(key='Nome', size=(20, 1))],
             [sg.Text('Nota:', font=("Arial", 12)), sg.InputText(key='Nota', size=(20, 1))],
             [sg.Button('Adicionar', font=("Arial", 14), size=(10, 1)),
-             sg.Button('Cancelar', font=("Arial", 14), size=(10, 1))]
+            sg.Button('Cancelar', font=("Arial", 14), size=(10, 1))]
         ]
-        return sg.Window('Adicionar Nota ou Prova', layout, finalize=True, size=(300, 200), element_justification='center')
 
-    def iniciar_tela_adicionar_nota(self, materia):
-        window = self.layout_tela_adicionar_nota(materia)
+        window = sg.Window('Adicionar Nota ou Prova', layout, finalize=True, size=(300, 200), element_justification='center')
 
         while True:
             event, values = window.read()
@@ -184,15 +175,16 @@ class TelaProfessor:
                 nota = values['Nota']
 
                 if tipo and nome and nota:
-                    # Adicionar lógica para salvar a nota ou prova
-                    print(f"Tipo: {tipo}, Nome: {nome}, Nota: {nota}")
-                    # Atualize a matéria com a nova nota ou prova aqui
+                    self.controlador.atribuir_atividade_para_todos_alunos(materia.nome, tipo, nome, float(nota))
+                    sg.popup('Atividade adicionada com sucesso!')
                 else:
                     sg.popup_error('Todos os campos são obrigatórios.')
 
         window.close()
 
-    def layout_tela_alunos(self, turma, lista_alunos):
+
+    def tela_alunos(self, turma):
+        lista_alunos = self.controlador.obter_alunos_por_turma(turma)
         linhas_tabela = [[aluno.matricula, aluno.nome] for aluno in lista_alunos]
         linhas_tabela.sort(key=lambda x: x[1])
 
@@ -211,11 +203,8 @@ class TelaProfessor:
             [sg.Button('Voltar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0))),
             sg.Button('Fechar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0)))]
         ]
-        return sg.Window("Alunos", layout, finalize=True, size=(500, 400), element_justification='center')
 
-    def iniciar_tela_alunos(self, turma):
-        lista_alunos = self.controlador.obter_alunos_por_turma(turma)
-        window = self.layout_tela_alunos(turma, lista_alunos)
+        window = sg.Window("Alunos", layout, finalize=True, size=(500, 400), element_justification='center')
 
         while True:
             event, values = window.read()
@@ -226,49 +215,67 @@ class TelaProfessor:
                 if values['Tabela']:  # Verifica se há uma linha selecionada
                     linha_clicada = values['Tabela'][0]  # Obtém a linha clicada
                     aluno = lista_alunos[linha_clicada]
-                    self.iniciar_tela_atribuir_notas(aluno)
+                    # Abre a tela para atribuir notas faltantes
+                    self.tela_selecionar_materia_para_atribuir_notas(aluno)
 
             elif event == 'Voltar':
                 window.close()
                 return
 
+        window.close()
 
-            window.close()
-
-    def layout_tela_atribuir_notas(self, aluno):
-        materias = self.controlador.obter_materias_do_aluno(aluno)  # Supondo que você tenha esse método
+    def tela_selecionar_materia_para_atribuir_notas(self, aluno):
+        # Obtém as matérias do aluno
+        materias = self.controlador.obter_materias_do_aluno(aluno)
+        lista_materias = [materia.nome for materia in materias]
 
         layout = [
-            [sg.Text(f"Atribuir nota para {aluno.nome}", font=("Arial", 14), pad=((0, 0), (10, 10)))],
-            [sg.Text("Selecione a matéria:", font=("Arial", 14))],
-            [sg.Combo([materia.nome for materia in materias], key="Materia", font=("Arial", 14), size=(30, 1))],
-            [sg.Text("Nota:", font=("Arial", 14))],
-            [sg.InputText(key="Nota", font=("Arial", 14), size=(30, 1))],
-            [sg.Button('Salvar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0))),
+            [sg.Text(f"Selecionar matéria para o aluno: {aluno.nome}", font=("Arial", 14), pad=((0, 0), (10, 10)))],
+            [sg.Combo(lista_materias, key="Materia", font=("Arial", 14), size=(30, 1))],
+            [sg.Button('Verificar e Atribuir Notas', font=("Arial", 14), size=(20, 1), pad=((5, 5), (10, 0))),
             sg.Button('Voltar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0)))]
         ]
-        return sg.Window("Atribuir Nota", layout, finalize=True, size=(400, 300), element_justification='center')
 
-    def iniciar_tela_atribuir_notas(self, aluno):
-        window = self.layout_tela_atribuir_notas(aluno)
+        window = sg.Window("Selecionar Matéria", layout, finalize=True, size=(500, 300), element_justification='center')
 
         while True:
             event, values = window.read()
             if event in (sg.WIN_CLOSED, 'Voltar'):
                 break
 
-            if event == 'Salvar':
+            if event == 'Verificar e Atribuir Notas':
                 materia_nome = values['Materia']
-                nota = values['Nota']
-                if materia_nome and nota:
-                    try:
-                        nota = float(nota)
-                        self.controlador.atribuir_nota(aluno, materia_nome, nota)
-                        sg.popup("Nota atribuída com sucesso!", title="Sucesso")
-                    except ValueError:
-                        sg.popup("Nota deve ser um número válido.", title="Erro")
+                if materia_nome:
+                    self.tela_atribuir_notas_faltantes(aluno, materia_nome)
                 else:
-                    sg.popup("Por favor, preencha todos os campos.", title="Erro")
+                    sg.popup("Por favor, selecione uma matéria.", title="Erro")
 
         window.close()
 
+    def tela_atribuir_notas_faltantes(self, aluno, materia_nome):
+        # Obtém a matéria e suas atividades
+        materia = self.controlador.materia_dao.buscar_materia(materia_nome)
+        if not materia:
+            sg.popup(f"Matéria {materia_nome} não encontrada.", title="Erro")
+            return
+
+        # Verifica atividades pendentes
+        atividades_pendentes = {}
+        for tipo_atividade, atividades in materia.provas.items():
+            if isinstance(atividades, dict):  # Verifica se é um dicionário
+                for atividade, valor in atividades.items():
+                    if atividade not in aluno.notas.get(materia_nome, {}).get(tipo_atividade, {}):
+                        atividades_pendentes[atividade] = tipo_atividade
+
+        if atividades_pendentes:
+            # Solicita nota para as atividades pendentes
+            for atividade, tipo in atividades_pendentes.items():
+                nota = sg.popup_get_text(f"Digite a nota para a atividade '{atividade}' ({tipo}) do aluno {aluno.nome}:")
+                if nota:
+                    try:
+                        nota = float(nota)
+                        self.controlador.atribuir_nota_aluno(aluno, materia_nome, atividade, nota)
+                    except ValueError:
+                        sg.popup("Nota deve ser um número válido.", title="Erro")
+        else:
+            sg.popup("O aluno já possui todas as notas lançadas.", title="Informação")

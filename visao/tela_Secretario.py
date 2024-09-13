@@ -4,7 +4,7 @@ class TelaSecretario:
     def __init__(self, controlador):
         self.controlador = controlador
 
-    def layout_tela_inicial(self, secretario):
+    def tela_inicial(self, secretario):
         sg.theme('DarkBlue12')
         layout = [
             [sg.Text(f'Nome: {secretario.nome}', font=("Arial", 14)),
@@ -17,10 +17,9 @@ class TelaSecretario:
              sg.Button("Ver Matérias", key="MATERIAS", size=(15, 1), font=("Arial", 14))],
             [sg.Button("Ver Secretários", key="SECRETARIOS", size=(15, 1), font=("Arial", 14))]
         ]
-        return sg.Window("Secretário", layout, size=(450, 250), element_justification='center', finalize=True)
+        
+        window = sg.Window("Secretário", layout, size=(450, 250), element_justification='center', finalize=True)
 
-    def iniciar_tela_inicial(self, secretario):
-        window = self.layout_tela_inicial(secretario)
 
         while True:
             event, values = window.read()
@@ -28,19 +27,19 @@ class TelaSecretario:
                 break
 
             if event == "ALUNOS":
-                self.iniciar_tela_alunos()
+                self.tela_alunos()
 
             elif event == "PROFESSORES":
-                self.iniciar_tela_professores()
+                self.tela_professores()
 
             elif event == "TURMAS":
-                self.iniciar_tela_turmas()
+                self.tela_turmas()
 
             elif event == "MATERIAS":
-                self.iniciar_tela_materias()
+                self.tela_materias()
 
             elif event == "SECRETARIOS":
-                self.iniciar_tela_secretarios()
+                self.tela_secretarios()
 
         window.close()
 
@@ -48,7 +47,7 @@ class TelaSecretario:
     # PARTE DO SECRETARIO
     #----------------------------------------------------------------------
 
-    def layout_tela_secretarios(self):
+    def tela_secretarios(self):
         secretarios = self.controlador.obter_secretarios()
         linhas_tabela = [[secretario.registro, secretario.nome, secretario.idade] for secretario in secretarios]
 
@@ -68,10 +67,8 @@ class TelaSecretario:
             [sg.Button('Voltar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0))),
              sg.Button('Fechar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0)))]
         ]
-        return sg.Window("Secretários", layout, finalize=True, size=(450, 450), element_justification='center')
 
-    def iniciar_tela_secretarios(self):
-        window = self.layout_tela_secretarios()
+        window = sg.Window("Secretários", layout, finalize=True, size=(450, 450), element_justification='center')
 
         while True:
             event, values = window.read()
@@ -79,7 +76,7 @@ class TelaSecretario:
                 break
 
             elif event == 'Adicionar Secretário':
-                self.iniciar_tela_adicionar_secretario()
+                self.tela_adicionar_secretario()
                 window['Tabela'].update(values=[[sec.registro, sec.nome, sec.idade] for sec in self.controlador.obter_secretarios()])
 
 
@@ -96,7 +93,7 @@ class TelaSecretario:
 
         window.close()
 
-    def layout_tela_adicionar_secretario(self):
+    def tela_adicionar_secretario(self):
         layout = [
             [sg.Text("Nome:", size=(15, 1), font=("Arial", 14)), sg.InputText(key='nome')],
             [sg.Text("Idade:", size=(15, 1), font=("Arial", 14)), sg.InputText(key='idade')],
@@ -105,10 +102,8 @@ class TelaSecretario:
             [sg.Text("Email:", size=(15, 1), font=("Arial", 14)), sg.InputText(key='email')],
             [sg.Button("Adicionar", font=("Arial", 14)), sg.Button("Cancelar", font=("Arial", 14))]
         ]
-        return sg.Window("Adicionar Secretário", layout, finalize=True)
 
-    def iniciar_tela_adicionar_secretario(self):
-        window = self.layout_tela_adicionar_secretario()
+        window = sg.Window("Adicionar Secretário", layout, finalize=True)
 
         while True:
             event, values = window.read()
@@ -128,13 +123,12 @@ class TelaSecretario:
                     return True
 
         window.close()
-        return False
     
     #----------------------------------------------------------------------
     # PARTE DO ALUNO
     #----------------------------------------------------------------------
 
-    def layout_tela_alunos(self):
+    def tela_alunos(self):
         alunos = self.controlador.obter_alunos()
         
         alunos_lista = [[aluno.matricula, aluno.nome, aluno.idade] for aluno in alunos]
@@ -155,10 +149,8 @@ class TelaSecretario:
             [sg.Button('Voltar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0))),
             sg.Button('Fechar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0)))]
         ]
-        return sg.Window("Alunos", layout, finalize=True, size=(450, 450), element_justification='center')
-
-    def iniciar_tela_alunos(self):
-        window = self.layout_tela_alunos()
+    
+        window = sg.Window("Alunos", layout, finalize=True, size=(450, 450), element_justification='center')
 
         while True:
             event, values = window.read()
@@ -166,7 +158,8 @@ class TelaSecretario:
                 break
 
             elif event == 'Adicionar Aluno':
-                self.iniciar_tela_adicionar_aluno()
+                turmas = self.controlador.obter_turmas()
+                self.tela_adicionar_aluno(turmas)
                 window['Tabela'].update(values=[[aluno.matricula, aluno.nome, aluno.idade] for aluno in self.controlador.obter_alunos()])
 
 
@@ -183,7 +176,7 @@ class TelaSecretario:
 
         window.close()
 
-    def layout_tela_adicionar_aluno(self, turmas):
+    def tela_adicionar_aluno(self, turmas):
         turmas_nomes = [turma.nome_turma for turma in turmas]
 
         layout = [
@@ -194,11 +187,10 @@ class TelaSecretario:
             [sg.Text("Turma:", size=(15, 1), font=("Arial", 14)), sg.Combo(turmas_nomes, key='turma')],
             [sg.Button("Adicionar", font=("Arial", 14)), sg.Button("Cancelar", font=("Arial", 14))]
         ]
-        return sg.Window("Adicionar Aluno", layout, finalize=True)
+        
+        window = sg.Window("Adicionar Aluno", layout, finalize=True)
 
-    def iniciar_tela_adicionar_aluno(self):
         turmas = self.controlador.obter_turmas()
-        window = self.layout_tela_adicionar_aluno(turmas)
 
         while True:
             event, values = window.read()
@@ -218,13 +210,12 @@ class TelaSecretario:
                     return True
 
         window.close()
-        return False
     
     #----------------------------------------------------------------------
     # PARTE DO PROFESSOR
     #----------------------------------------------------------------------
 
-    def layout_tela_professores(self):
+    def tela_professores(self):
         professores = self.controlador.obter_professores()
         
         professores_lista = [[professor.registro, professor.nome, professor.idade] for professor in professores]
@@ -245,10 +236,8 @@ class TelaSecretario:
             [sg.Button('Voltar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0))),
             sg.Button('Fechar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0)))]
         ]
-        return sg.Window("Professores", layout, finalize=True, size=(450, 450), element_justification='center')
 
-    def iniciar_tela_professores(self):
-        window = self.layout_tela_professores()
+        window = sg.Window("Professores", layout, finalize=True, size=(450, 450), element_justification='center')
 
         while True:
             event, values = window.read()
@@ -256,7 +245,7 @@ class TelaSecretario:
                 break
 
             elif event == 'Adicionar Professor':
-                self.iniciar_tela_adicionar_professor()
+                self.tela_adicionar_professor()
                 window['Tabela'].update(values=[[prof.registro, prof.nome, prof.idade] for prof in self.controlador.obter_professores()])
 
 
@@ -274,7 +263,7 @@ class TelaSecretario:
 
         window.close()
 
-    def layout_tela_adicionar_professor(self):
+    def tela_adicionar_professor(self):
         layout = [
             [sg.Text("Nome:", size=(15, 1), font=("Arial", 14)), sg.InputText(key='nome')],
             [sg.Text("Idade:", size=(15, 1), font=("Arial", 14)), sg.InputText(key='idade')],
@@ -283,10 +272,8 @@ class TelaSecretario:
             [sg.Text("Email:", size=(15, 1), font=("Arial", 14)), sg.InputText(key='email')],
             [sg.Button("Adicionar", font=("Arial", 14)), sg.Button("Cancelar", font=("Arial", 14))]
         ]
-        return sg.Window("Adicionar Professor", layout, finalize=True)
 
-    def iniciar_tela_adicionar_professor(self):
-        window = self.layout_tela_adicionar_professor()
+        window = sg.Window("Adicionar Professor", layout, finalize=True)
 
         while True:
             event, values = window.read()
@@ -306,9 +293,13 @@ class TelaSecretario:
                     return True
 
         window.close()
-        return False
 
-    def layout_tela_materias(self):
+    #----------------------------------------------------------------------
+    # PARTE DAS MATERIAS
+    #----------------------------------------------------------------------
+
+
+    def tela_materias(self):
         materias = self.controlador.obter_materias() 
         materias_lista = [[materia.nome, materia.professor.nome, materia.turma.nome_turma] for materia in materias]
 
@@ -328,10 +319,8 @@ class TelaSecretario:
             [sg.Button('Voltar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0))),
              sg.Button('Fechar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0)))]
         ]
-        return sg.Window("Matérias", layout, finalize=True, size=(600, 450), element_justification='center')
 
-    def iniciar_tela_materias(self):
-        window = self.layout_tela_materias()
+        window = sg.Window("Matérias", layout, finalize=True, size=(600, 450), element_justification='center')
 
         while True:
             event, values = window.read()
@@ -339,7 +328,7 @@ class TelaSecretario:
                 break
 
             elif event == 'Adicionar Matéria':
-                self.iniciar_tela_adicionar_materia()
+                self.tela_adicionar_materia()
                 window['TabelaMaterias'].update(
                     values=[[materia.nome, materia.professor, materia.turma] for materia in self.controlador.obter_materias()])
 
@@ -357,8 +346,7 @@ class TelaSecretario:
 
         window.close()
 
-    def layout_tela_adicionar_materia(self):
-        # Obtendo listas de professores e turmas para os comboboxes
+    def tela_adicionar_materia(self):
         professores = [professor.nome for professor in self.controlador.obter_professores()]
         turmas = [turma.nome_turma for turma in self.controlador.obter_turmas()]
 
@@ -368,10 +356,8 @@ class TelaSecretario:
             [sg.Text("Nome da Turma:", size=(15, 1), font=("Arial", 14)), sg.Combo(turmas, key='turma', readonly=True)],
             [sg.Button("Adicionar", font=("Arial", 14)), sg.Button("Cancelar", font=("Arial", 14))]
         ]
-        return sg.Window("Adicionar Matéria", layout, finalize=True)
 
-    def iniciar_tela_adicionar_materia(self):
-        window = self.layout_tela_adicionar_materia()
+        window = sg.Window("Adicionar Matéria", layout, finalize=True)
 
         while True:
             event, values = window.read()
@@ -390,7 +376,12 @@ class TelaSecretario:
 
         window.close() 
 
-    def layout_tela_turmas(self):
+    #----------------------------------------------------------------------
+    # PARTE DAS TURMAS
+    #----------------------------------------------------------------------
+
+
+    def tela_turmas(self):
         turmas = self.controlador.obter_turmas()
         turmas_lista = [[turma.nome_turma, len(turma.alunos), len(turma.materias)] for turma in turmas]
 
@@ -410,10 +401,8 @@ class TelaSecretario:
             [sg.Button('Voltar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0))),
              sg.Button('Fechar', font=("Arial", 14), size=(10, 1), pad=((5, 5), (10, 0)))]
         ]
-        return sg.Window("Turmas", layout, finalize=True, size=(600, 450), element_justification='center')
 
-    def iniciar_tela_turmas(self):
-        window = self.layout_tela_turmas()
+        window = sg.Window("Turmas", layout, finalize=True, size=(600, 450), element_justification='center')
 
         while True:
             event, values = window.read()
@@ -421,7 +410,7 @@ class TelaSecretario:
                 break
 
             elif event == 'Adicionar Turma':
-                self.iniciar_tela_adicionar_turma()
+                self.tela_adicionar_turma()
                 window['TabelaTurmas'].update(
                     values=[[turma.nome_turma, len(turma.alunos), len(turma.materias)] for turma in self.controlador.obter_turmas()])
 
@@ -439,15 +428,13 @@ class TelaSecretario:
 
         window.close()
 
-    def layout_tela_adicionar_turma(self):
+    def tela_adicionar_turma(self):
         layout = [
             [sg.Text("Nome da Turma:", size=(15, 1), font=("Arial", 14)), sg.InputText(key='nome_turma')],
             [sg.Button("Adicionar", font=("Arial", 14)), sg.Button("Cancelar", font=("Arial", 14))]
         ]
-        return sg.Window("Adicionar Turma", layout, finalize=True)
 
-    def iniciar_tela_adicionar_turma(self):
-        window = self.layout_tela_adicionar_turma()
+        window = sg.Window("Adicionar Turma", layout, finalize=True)
 
         while True:
             event, values = window.read()
@@ -463,4 +450,3 @@ class TelaSecretario:
                     return True
 
         window.close()
-        return False

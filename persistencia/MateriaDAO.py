@@ -10,44 +10,44 @@ class MateriaDAO(BaseDAO):
         self.materias = self.carregar_materias()
 
     def carregar_materias(self):
-        materias = []
-        try:
-            with open(self.file_path, 'r', encoding='utf-8') as file:
-                dados = json.load(file)
-                if isinstance(dados, list):
-                    for item in dados:
-                        professor = self.professor_dao.buscar_professor_por_nome(item['professor'])
-                        turma = self.turma_dao.buscar_turma(item['turma'])
-                        materia = Materia(
-                            nome=item['nome'],
-                            professor=professor,
-                            turma=turma,
-                            provas=item.get('provas', {}),
-                            trabalhos=item.get('trabalhos', {})
-                        )
-                        materias.append(materia)
-                elif isinstance(dados, dict):
-                    for nome, item in dados.items():
-                        professor = self.professor_dao.buscar_professor_por_nome(item['professor'])
-                        turma = self.turma_dao.buscar_turma(item['turma'])
-                        materia = Materia(
-                            nome=item['nome'],
-                            professor=professor,
-                            turma=turma,
-                            provas=item.get('provas', {}),
-                            trabalhos=item.get('trabalhos', {})
-                        )
-                        materias.append(materia)
-        except FileNotFoundError:
-            print("Arquivo de dados não encontrado.")
-        except json.JSONDecodeError:
-            print("Erro ao carregar dados: arquivo JSON malformado.")
-        return materias
+            materias = []
+            try:
+                with open(self.file_path, 'r', encoding='utf-8') as file:
+                    dados = json.load(file)
+                    if isinstance(dados, list):
+                        for item in dados:
+                            professor = self.professor_dao.buscar_professor_por_nome(item['professor'])
+                            turma = self.turma_dao.buscar_turma(item['turma'])
+                            materia = Materia(
+                                nome=item['nome'],
+                                professor=professor,
+                                turma=turma,
+                                provas=item.get('provas', {}),
+                                trabalhos=item.get('trabalhos', {})
+                            )
+                            materias.append(materia)
+                    elif isinstance(dados, dict):
+                        for nome, item in dados.items():
+                            professor = self.professor_dao.buscar_professor_por_nome(item['professor'])
+                            turma = self.turma_dao.buscar_turma(item['turma'])
+                            materia = Materia(
+                                nome=item['nome'],
+                                professor=professor,
+                                turma=turma,
+                                provas=item.get('provas', {}),
+                                trabalhos=item.get('trabalhos', {})
+                            )
+                            materias.append(materia)
+            except FileNotFoundError:
+                print("Arquivo de dados não encontrado.")
+            except json.JSONDecodeError:
+                print("Erro ao carregar dados: arquivo JSON malformado.")
+            return materias
 
     def salvar_dados(self):
         dados_para_salvar = {materia.nome: {
             "nome": materia.nome,
-            "professor": materia.professor.registro if materia.professor else None,
+            "professor": materia.professor.nome if materia.professor else None,
             "turma": materia.turma.nome_turma if materia.turma else None,
             "provas": materia.provas,
             "trabalhos": materia.trabalhos
@@ -86,3 +86,21 @@ class MateriaDAO(BaseDAO):
             if materia.nome == nome:
                 return materia
         return None
+
+    def adicionar_avaliacao(self, nome_materia, tipo_avaliacao, nome_avaliacao, nota):
+        materia = self.buscar_materia_por_nome(nome_materia)
+        if not materia:
+            print(f"Matéria '{nome_materia}' não encontrada.")
+            return
+        
+        if tipo_avaliacao.lower() == 'prova':
+            materia.provas[nome_avaliacao] = nota
+        elif tipo_avaliacao.lower() == 'trabalho':
+            materia.trabalhos[nome_avaliacao] = nota
+        else:
+            print("Tipo de avaliação inválido. Use 'prova' ou 'trabalho'.")
+            return
+        
+        # Salvar as mudanças no arquivo
+        self.salvar_dados()
+        print(f"{tipo_avaliacao.capitalize()} '{nome_avaliacao}' adicionada com sucesso à matéria '{nome_materia}'.")

@@ -78,7 +78,9 @@
             "Geografia": {
                 "provas": {},
                 "trabalhos": {
-                    "Lista": 4.0
+                    "Lista": 4.0,
+                    "tp 2": 3.0,
+                    "Trabalho 2": 10.0
                 }
             }
         }
