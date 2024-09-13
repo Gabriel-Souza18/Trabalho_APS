@@ -1,0 +1,105 @@
+[
+    {
+        "nome": "Geografia",
+        "professor": "Gabriel",
+        "turma": "7° ano A",
+        "provas": {
+            "Prova 1": 8.5,
+            "Prova 2": 7.0
+        },
+        "trabalhos": {
+            "Trabalho 1": 9.0
+        }
+    },
+    {
+        "nome": "Português",
+        "professor": "Gustavo",
+        "turma": "7° ano B",
+        "provas": {
+            "Prova 1": 8.0,
+            "Prova 2": 7.5
+        },
+        "trabalhos": {
+            "Trabalho 1": 8.5
+        }
+    },
+    {
+        "nome": "Matemática",
+        "professor": "Carlos",
+        "turma": "7° ano B",
+        "provas": {
+            "Prova 1": 9.0,
+            "Prova 2": 8.5
+        },
+        "trabalhos": {
+            "Trabalho 1": 9.5
+        }
+    },
+    {
+        "nome": "Ciências",
+        "professor": "Alice",
+        "turma": "7° ano B",
+        "provas": {
+            "Prova 1": 8.0,
+            "Prova 2": 7.5
+        },
+        "trabalhos": {
+            "Trabalho 1": 8.0
+        }
+    },
+    {
+        "nome": "História",
+        "professor": "Daniela",
+        "turma": "7° ano A",
+        "provas": {
+            "Prova 1": 7.5,
+            "Prova 2": 7.0
+        },
+        "trabalhos": {
+            "Trabalho 1": 8.0
+        }
+    },
+    {
+        "nome": "Inglês",
+        "professor": "Fernando",
+        "turma": "7° ano A",
+        "provas": {
+            "Prova 1": 8.0,
+            "Prova 2": 8.5
+        },
+        "trabalhos": {
+            "Trabalho 1": 9.0
+        }
+    },
+    {
+        "nome": "Educação Física",
+        "professor": "Mariana",
+        "turma": "7° ano B",
+        "provas": {
+            "Prova 1": 10.0,
+            "Prova 2": 9.5
+        },
+        "trabalhos": {
+            "Trabalho 1": 10.0
+        }
+    },
+    {
+        "nome": "Artes",
+        "professor": "Helena",
+        "turma": "7° ano B",
+        "provas": {
+            "Prova 1": 9.0,
+            "Prova 2": 8.5
+        },
+        "trabalhos": {
+            "Trabalho 1": 9.5
+        }
+    },
+    {
+        "nome": "Biologia",
+        "professor": "Alvaro",
+        "turma": "7° ano A",
+        "provas": {},
+        "trabalhos": {}
+    }
+]

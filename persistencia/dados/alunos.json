@@ -1,0 +1,113 @@
+{
+    "202202": {
+        "nome": "Braian",
+        "idade": 20,
+        "email": "Braian@gmail.com",
+        "matricula": "202202",
+        "turma": "7° ano A",
+        "notas": {
+            "Geografia": {
+                "provas": {
+                    "Prova 1": 8.0,
+                    "Prova 2": 7.0
+                },
+                "trabalhos": {
+                    "Trabalho 1": 9.0
+                }
+            },
+            "Português": {
+                "provas": {
+                    "Prova 1": 7.0
+                },
+                "trabalhos": {
+                    "Trabalho 1": 7.0
+                }
+            }
+        }
+    },
+    "202203": {
+        "nome": "Alice",
+        "idade": 21,
+        "email": "alice@gmail.com",
+        "matricula": "202203",
+        "turma": "7° ano B",
+        "notas": {
+            "Matemática": {
+                "provas": {
+                    "Prova 1": 9.0,
+                    "Prova 2": 8.5
+                },
+                "trabalhos": {
+                    "Trabalho 1": 9.5
+                }
+            },
+            "Ciências": {
+                "provas": {
+                    "Prova 1": 8.0,
+                    "Prova 2": 7.5
+                },
+                "trabalhos": {
+                    "Trabalho 1": 8.0
+                }
+            }
+        }
+    },
+    "202204": {
+        "nome": "Carlos",
+        "idade": 19,
+        "email": "carlos@gmail.com",
+        "matricula": "202204",
+        "turma": "7° ano A",
+        "notas": {
+            "História": {
+                "provas": {
+                    "Prova 1": 7.5,
+                    "Prova 2": 7.0
+                },
+                "trabalhos": {}
+            },
+            "Inglês": {
+                "provas": {
+                    "Prova 1": 8.0,
+                    "Prova 2": 8.5
+                },
+                "trabalhos": {
+                    "Trabalho 1": 9.0
+                }
+            },
+            "Geografia": {
+                "provas": {},
+                "trabalhos": {
+                    "Lista": 4.0
+                }
+            }
+        }
+    },
+    "202205": {
+        "nome": "Daniela",
+        "idade": 18,
+        "email": "daniela@gmail.com",
+        "matricula": "202205",
+        "turma": "7° ano B",
+        "notas": {
+            "Educação Física": {
+                "provas": {
+                    "Prova 1": 10.0,
+                    "Prova 2": 9.5
+                },
+                "trabalhos": {
+                    "Trabalho 1": 10.0
+                }
+            },
+            "Artes": {
+                "provas": {
+                    "Prova 1": 9.0,
+                    "Prova 2": 8.5
+                },
+                "trabalhos": {
+                    "Trabalho 1": 9.5
+                }
+            }
+        }
+    }
+}

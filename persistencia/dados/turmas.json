@@ -1,0 +1,28 @@
+[
+    {
+        "nome": "7° ano A",
+        "alunos": [
+            "202202",
+            "202204"
+        ],
+        "materias": [
+            "Geografia",
+            "História",
+            "Inglês",
+            "Física"
+        ]
+    },
+    {
+        "nome": "7° ano B",
+        "alunos": [
+            "202203",
+            "202205"
+        ],
+        "materias": [
+            "Matemática",
+            "Ciências",
+            "Educação Física",
+            "Artes"
+        ]
+    }
+]
